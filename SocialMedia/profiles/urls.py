@@ -9,5 +9,4 @@ app_name = 'profiles'
 
 urlpatterns =[
     path('myprofile/', views.my_profile_view, name='my_profile_view'),
-    path('signup/', views.SignUp.as_view(), name='signup'),
 ]

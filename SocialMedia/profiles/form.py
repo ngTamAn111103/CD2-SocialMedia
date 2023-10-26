@@ -6,6 +6,10 @@ class ProfileModelForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('first_name','last_name','bio','country','avatar','cover','gender','birthday')
+class LoginModelForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('username','password')
         
 
 class UserModelForm(forms.ModelForm):

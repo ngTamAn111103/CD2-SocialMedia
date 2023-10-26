@@ -7,6 +7,8 @@ from .models import Profile
 from .form import ProfileModelForm, UserModelForm
 from django.contrib.auth.models import User
 from django.views.generic.edit import FormView
+from django.contrib.auth.views import LoginView
+
 # Create your views here.
 def my_profile_view(request):
     profile = Profile.objects.get(username = request.user)
@@ -51,5 +53,13 @@ class SignUp(CreateView):
         profile.save()
 
         return super().form_valid(form)
+
+
+    
+class Login(LoginView):
+    template_name = 'account/login.html'
+    form_class = UserModelForm
+
+    success_url = reverse_lazy('profiles:my_profile_view')  # Thay 'index' bằng tên view của trang index.html của bạn
 
     
