@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %} Trang cá nhân {% endblock %}
+{% block content %}
+<h1>Trang cá nhân</h1>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Chỉnh sửa thông tin
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Chỉnh sửa thông tin</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <img src="{{ profile.avatar.url }}" alt="{{ profile.avatar.name }}">
+
+      <form action="" method="POST" enctype='multipart/form-data'>
+        <div class="modal-body">
+          {% csrf_token %}
+          {{form.as_p}}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+          <button type="submit" class="btn btn-primary">Xác nhận</button>
+        </div>
+      </form>
+
+
+
+    </div>
+  </div>
+</div>
+
+{%if confirm == True%}
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+  <strong>Cập nhật thành công!</strong> Thông tin của bạn đã được cập nhật.
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+{%endif%}
+<br>
+
+<br>
+<h1>Họ tên: {{profile.first_name}} {{profile.last_name}}</h1>
+<br>
+
+<br>
+<h1>avatar:</h1> <img src="{{ profile.avatar.url }}" alt="{{ profile.avatar.name }}" style="height:100px">
+<br>
+
+
+
+{% endblock %}

@@ -1,0 +1,13 @@
+prefix=/Users/anony/anaconda3/envs/social
+exec_prefix=/Users/anony/anaconda3/envs/social
+libdir=/Users/anony/anaconda3/envs/social/lib
+sharedlibdir=/Users/anony/anaconda3/envs/social/lib
+includedir=/Users/anony/anaconda3/envs/social/include
+
+Name: zlib
+Description: zlib compression library
+Version: 1.2.13
+
+Requires:
+Libs: -L${libdir} -L${sharedlibdir} -lz
+Cflags: -I${includedir}

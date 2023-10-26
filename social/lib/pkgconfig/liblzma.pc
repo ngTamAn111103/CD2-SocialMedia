@@ -1,0 +1,19 @@
+#
+# Author: Lasse Collin
+#
+# This file has been put into the public domain.
+# You can do whatever you want with this file.
+#
+
+prefix=/Users/anony/anaconda3/envs/social
+exec_prefix=/Users/anony/anaconda3/envs/social
+libdir=/Users/anony/anaconda3/envs/social/lib
+includedir=/Users/anony/anaconda3/envs/social/include
+
+Name: liblzma
+Description: General purpose data compression library
+URL: https://tukaani.org/xz/
+Version: 5.4.2
+Cflags: -I${includedir}
+Libs: -L${libdir} -llzma
+Libs.private: -pthread -lpthread
