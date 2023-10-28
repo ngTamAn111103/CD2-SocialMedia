@@ -3,7 +3,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from .utils import get_random_code
 from django.template.defaultfilters import slugify
-
 # Create your models here.
 class Profile(models.Model):
     first_name = models.CharField(max_length=200, blank=True)

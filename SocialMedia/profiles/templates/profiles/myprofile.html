@@ -58,6 +58,11 @@
 <h1>avatar:</h1> <img src="{{ profile.avatar.url }}" alt="{{ profile.avatar.name }}" style="height:100px">
 <br>
 
+{% for friend in profile.friends.all %}
+  <a href="#">{{ friend.username }} <br></a>
+{% endfor %}
+
+
 
 
 {% endblock %}

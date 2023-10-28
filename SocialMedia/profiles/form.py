@@ -1,18 +1,22 @@
 from django import forms
 from .models import Profile, User
-
+from django.contrib.auth.forms import UserCreationForm
+from datetime import datetime
 
 class ProfileModelForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('first_name','last_name','bio','country','avatar','cover','gender','birthday')
+        
+# Đăng nhập
 class LoginModelForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('username','password')
         
 
-class UserModelForm(forms.ModelForm):
+# Đăng ký
+class SignUpModelForm(forms.ModelForm):
     first_name = forms.CharField(label='Họ')
     last_name = forms.CharField(label='Tên')
     username = forms.CharField(label='Tài khoản')
@@ -83,7 +87,10 @@ class UserModelForm(forms.ModelForm):
     ('Vĩnh Phúc', 'Vĩnh Phúc'),
     )
 
-    country = forms.ChoiceField(choices= CHOICE_COUNTRY, label="Thành phố")
+    
+# Sắp xếp mảng CHOICE_COUNTRY theo value từ A đến Z
+    CHOICE_COUNTRY = sorted(CHOICE_COUNTRY, key=lambda x: x[1])
+    country = forms.ChoiceField(choices= CHOICE_COUNTRY, label="Thành phố",initial='Hồ Chí Minh')
     
     CHOICE_GENDER = (
     ('male', 'Nam'),
@@ -94,6 +101,7 @@ class UserModelForm(forms.ModelForm):
     # birthday = forms.CharField(max_length=10, label="Ngày sinh",widget=forms.TextInput(placeholder="DD/MM/YYYY"))
     birthday = forms.CharField(max_length=10, label="Ngày sinh", 
                                widget=forms.TextInput(attrs={'placeholder': 'YYYY-MM-DD'}))
+    
    
 
 
@@ -101,4 +109,33 @@ class UserModelForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('first_name','last_name', 'username', 'password1', 'password2', 'country','gender','birthday')
+    
+    # Cấu hình bắt lỗi
+    def clean_username(self):
+        # Kiểm tra xem tài khoản đã tồn tại chưa
+        username = self.cleaned_data.get('username')
+        if User.objects.filter(username=username).exists():
+            raise forms.ValidationError("Tài khoản đã tồn tại. Vui lòng chọn một tài khoản khác.")
+        return username
+    def clean_password2(self):
+        cleaned_data = super().clean()
+        password1 = cleaned_data.get('password1')
+        password2 = cleaned_data.get('password2')
+        
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError("Mật khẩu xác nhận không khớp.")
+    # def clean_birthday(self):
+    #     cleaned_data = super().clean()
+    #     birthday = cleaned_data.get('birthday')
+
+    #     # Kiểm tra định dạng ngày sinh
+    #     try:
+    #         # Chuyển đổi chuỗi ngày sinh thành đối tượng datetime
+    #         datetime_obj = datetime.strptime(birthday, '%Y/%M/%d')
+    #     except ValueError:
+    #         raise forms.ValidationError("Ngày sinh không hợp lệ. Định dạng phải là YYYY-MM-DD.")
+        
+    #     return birthday
+        
+        
         

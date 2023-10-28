@@ -21,17 +21,21 @@ from django.conf.urls.static import static
 from .views import home_view
 from profiles import views
 from django.urls import re_path
+from django.contrib.auth import views as auth_views
+from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # path('', include('profiles.urls')),
+
     path('', home_view, name='home_view'),
     path('profiles/', include('profiles.urls'), name='profiles'),
     
     # đăng ký đăng nhập
     path('signup/', views.SignUp.as_view(), name='signup'),
-    # path('login/', views.Login.as_view(), name='login'),
-  path("login", views.LoginView.as_view(template_name="account/login.html"),name='login'),
+    path("login", auth_views.LoginView.as_view(template_name="account/login.html"),name='login'),
+    # path("logout", views.LogoutView.as_view(),name='logout'),
+    path('logout', LogoutView.as_view(), name='logout'),
+
 
 
     

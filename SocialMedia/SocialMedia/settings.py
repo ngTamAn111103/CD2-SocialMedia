@@ -131,3 +131,5 @@ MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR),"static_cdn", "media_root")
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = '/profiles/myprofile/'
+# Lâm
+LOGOUT_REDIRECT_URL = '/'

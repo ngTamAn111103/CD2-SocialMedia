@@ -1,20 +1,18 @@
+
 {% extends 'base.html' %}
 
-{%block title %}
+{% block title %}
 Đăng nhập
-{%endblock  %}
+{% endblock  %}
+
+{% block content %}
 
 
-
-{%block content %}
-<h1>
-  Đăng nhập
-</h1>
+<h1>Đăng nhập</h1>
 
 <form action="" method="POST">
   {% csrf_token %}
-  {{form.as_p}}
-
+  {{ form.as_p }}
   <button type="submit" class="btn btn-success">Đăng nhập</button>
 </form>
-{%endblock  %}
+{% endblock  %}
