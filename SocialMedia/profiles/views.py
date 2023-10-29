@@ -7,12 +7,14 @@ from django.views.generic import CreateView
 from .models import Profile
 from .form import ProfileModelForm, SignUpModelForm,LoginModelForm
 from django.contrib.auth.views import LoginView
+from django.contrib.auth.decorators import login_required
 
 
 
 
 
 # Create your views here.
+@login_required
 def my_profile_view(request):
     profile = Profile.objects.get(username = request.user)
     # Hiển thị thông tin trong form của người dùng đang đăng nhạp
