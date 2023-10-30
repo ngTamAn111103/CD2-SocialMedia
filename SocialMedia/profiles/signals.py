@@ -9,13 +9,11 @@ from .models import Profile, Relationship
 #     if created:
 #         Profile.objects.create(username=instance)
 
-        
 
-        
-        
 # Tín hiệu: Khi gửi kết bạn và đồng ý: 2 người sẽ có trong danh sách bạn bè của đối phương
 @receiver(post_save, sender=Relationship)
 def post_save_add_to_friend(sender, instance, created, **kwargs):
+    print(123)
     sender_= instance.sender
     receiver_= instance.receiver
     
@@ -24,5 +22,3 @@ def post_save_add_to_friend(sender, instance, created, **kwargs):
         receiver_.friends.add(sender_.username)
         sender_.save()
         receiver_.save()
-        
-        # 'username', 'password1', 'password2', 'country','gender','birthday')

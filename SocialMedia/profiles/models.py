@@ -93,6 +93,30 @@ class Profile(models.Model):
     def get_count_friends(self):
         return (self.friends.all()).count()
     
+    # Lấy số lượng bài đăng 
+    def get_count_posts(self):
+        return self.posts.all().count()
+    
+    def get_all_authors_posts(self):
+        return self.posts.all()
+    
+    # đếm số lượng lượt thích mà người dùng đã thực hiện.
+    def get_likes_given_no(self):
+        likes = self.like_set.all()
+        total_liked = 0
+        for i in likes:
+            if i.value == "Like":
+                total_liked += 1
+        return total_liked
+    
+    # số lượng lượt thích đã nhận
+    def get_likes_recieved_no (self):
+        posts = self.posts.all()
+        total_liked =0
+        for i in posts:
+            total_liked += i.liked.all().count()
+        return total_liked
+    
     # Trả về trong admin thông tin 
     def __str__(self) -> str:
         return f'{self.username} / {self.created.strftime("%d-%m-%Y")}'

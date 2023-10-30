@@ -4,6 +4,7 @@ from django.core.validators import FileExtensionValidator
 # Xử lý user like bài
 from profiles.models import Profile
 
+
 # Create your models here.
 class Post (models.Model):
     content = models.TextField(blank=False,default='')
@@ -22,6 +23,8 @@ class Post (models.Model):
     
     def num_comments(self):
         return self.commented.all()
+    def num_comments2 (self):
+        return self.comment_set.all().count()
     
     class Meta:
         ordering = ('-created',)

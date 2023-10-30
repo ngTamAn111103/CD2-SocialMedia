@@ -66,5 +66,23 @@
 
 
 
+<h1>
+  Số lượng bài đăng: {{ profile.get_count_posts}}
+</h1>
+
+<br>
+
+<h1>
+  Số lượng lượt thích đã thực hiện: {{ profile.get_likes_given_no}}
+</h1>
+
+<br>
+
+<h1>
+  Số lượng lượt thích đã nhận: {{ profile.get_likes_recieved_no}}
+</h1>
+
+<br>
+
 
 {% endblock %}
