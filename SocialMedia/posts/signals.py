@@ -6,11 +6,12 @@ from profiles.models import Profile
 
 @receiver(post_save, sender=Like)
 def post_save_like(sender, instance, created, **kwargs):
+    print('post_save_like')
     user = instance.user
     post = instance.post
-    if instance.value == "LIKE":
+    if instance.value == "Like":
         post.liked.add(user)
-    elif instance.value == "UNLIKE":
+    elif instance.value == "Unlike":
         post.liked.remove(user)
     post.save()
 

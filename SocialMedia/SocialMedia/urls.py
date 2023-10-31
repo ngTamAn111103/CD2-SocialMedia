@@ -25,16 +25,26 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
+    # trang admin
     path('admin/', admin.site.urls),
 
+    # Trang hello
     path('', home_view, name='home_view'),
+    # Vào trong url profile: http://127.0.0.1:8000/profiles/myprofile/
     path('profiles/', include('profiles.urls'), name='profiles'),
     
-    # đăng ký đăng nhập
+    # đăng ký
     path('signup/', views.SignUp.as_view(), name='signup'),
+    # đăng nhập
     path("login", auth_views.LoginView.as_view(template_name="account/login.html"),name='login'),
-    # path("logout", views.LogoutView.as_view(),name='logout'),
+    # đăng xuất
     path('logout', LogoutView.as_view(), name='logout'),
+
+    # Vào trong post
+    path('posts/', include('posts.urls'), name='posts'),
+    
+    
+
 
 
 

@@ -72,7 +72,7 @@ class SignUp(CreateView):
                 user = User(username=username)
                 # Đặt mật khẩu
                 user.set_password(password1)  # Đảm bảo mật khẩu được mã hóa
-                
+
                 # Tạo đối tượng Profile và lưu vào cơ sở dữ liệu
                 profile = Profile(username=user, first_name=first_name, last_name=last_name, country=country, gender=gender, birthday=birthday)
                 
@@ -98,3 +98,12 @@ class Login(LoginView):
         login(self.request, form.get_user())
         return super().form_valid(form)
     
+# Lâm : xử lý đổi mk
+#  1 kiểm tra: mk cũ đúng ko
+# 2: 2 mk mới có == nhau ko 
+#  3: nếu 2 mk mới == nhau: xử lý là ghi lại password cho username, co mã hóa
+#  user.set_password(password1)  # Đảm bảo mật khẩu được mã hóa
+# SignUp
+# XỬ LÝ THUẬT TOÁN
+# form_valid
+# str(password1) != str(password2) CÓ THỂ HƠI NGƯỢC ĐỜI 1 TÍ

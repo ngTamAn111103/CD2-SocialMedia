@@ -9,4 +9,7 @@ app_name = 'profiles'
 
 urlpatterns =[
     path('myprofile/', views.my_profile_view, name='my_profile_view'),
+    # LÂM
+    path('/', views.my_profile_view, name='my_profile_view'),
+    
 ]

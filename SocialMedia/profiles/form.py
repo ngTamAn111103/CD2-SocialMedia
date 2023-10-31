@@ -1,7 +1,6 @@
 from django import forms
 from .models import Profile, User
 from django.contrib.auth.forms import UserCreationForm
-from datetime import datetime
 
 class ProfileModelForm(forms.ModelForm):
     class Meta:
@@ -124,18 +123,8 @@ class SignUpModelForm(forms.ModelForm):
         
         if password1 and password2 and password1 != password2:
             raise forms.ValidationError("Mật khẩu xác nhận không khớp.")
-    # def clean_birthday(self):
-    #     cleaned_data = super().clean()
-    #     birthday = cleaned_data.get('birthday')
+# Lâm: Đổi mk: resetpaswordmodelform
+#  3 trường: pass cũ, pas mới 1, pass mới 2
+# đăng ký các trường cho người dùng nhập
 
-    #     # Kiểm tra định dạng ngày sinh
-    #     try:
-    #         # Chuyển đổi chuỗi ngày sinh thành đối tượng datetime
-    #         datetime_obj = datetime.strptime(birthday, '%Y/%M/%d')
-    #     except ValueError:
-    #         raise forms.ValidationError("Ngày sinh không hợp lệ. Định dạng phải là YYYY-MM-DD.")
-        
-    #     return birthday
-        
-        
-        
+# Trường để người dùng nhập dữ liệu
