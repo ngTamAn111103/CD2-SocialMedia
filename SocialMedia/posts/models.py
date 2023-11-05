@@ -8,7 +8,7 @@ from profiles.models import Profile
 # Create your models here.
 class Post (models.Model):
     content = models.TextField(blank=False,default='')
-    image = models.FileField(upload_to='post', validators=[FileExtensionValidator(['png', 'jpg', 'jpeg', 'mp4','mov'])], blank= True)
+    image = models.ImageField(upload_to='post', blank= True)
     liked = models.ManyToManyField(Profile, blank=True, related_name='likes')
     commented = models.ManyToManyField(Profile, blank=True, related_name='comments')
     updated = models.DateTimeField(auto_now=True)
@@ -19,7 +19,7 @@ class Post (models.Model):
         return str(self.content[:50])
     
     def num_likes(self):
-        return self.liked.all()
+        return self.liked.all().count()
     
     def num_comments(self):
         return self.commented.all()

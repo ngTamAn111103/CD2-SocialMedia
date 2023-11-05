@@ -52,6 +52,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'profiles.middleware.LoginRequiredMiddleware',
+    'posts.middleware.LoginRequiredMiddleware',
 
 ]
 
@@ -132,6 +133,8 @@ MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR),"static_cdn", "media_root")
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-LOGIN_REDIRECT_URL = '/profiles/myprofile/'
+# Sau khi login tự động qua trang theo đường link. Vd: http://127.0.0.1:8000/profiles/myprofile/
+# LOGIN_REDIRECT_URL = '/profiles/myprofile/'
+LOGIN_REDIRECT_URL = '/posts/'
 # Lâm
 LOGOUT_REDIRECT_URL = '/'

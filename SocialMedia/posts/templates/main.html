@@ -6,26 +6,26 @@ Trang chủ post
 
 
 {% block content %}
-
+{%load static%}
 <h1>
     Post list: {{profile.username}}
 
 </h1>
 
-{%for obj in qs%}
-<img src="/Users/Disk/Python_Django/SocialMedia_Root/static_cdn/media_root/avatar_default.jpg" alt="photo" srcset="">
-        <p>{{obj.content}}</p>
-        <form action="{% url 'post:like_post_view' %}" method="POST">
-            {%csrf_token%}
-            <input type="hidden" name="post_id" value="{{obj.id}}">
-            <button type="submit" class="btn btn-primary">
-                {%if profile not in obj.liked.all%}
-                <i>Like</i>
-                {%else%}
-                <i>Unlike</i>
-                {%endif%}
-            </button>
-        </form>
-        <hr>
-    {%endfor%}
+{%for obj in qs%}   
+    <p>{{obj.content}}</p>
+    <img src="{{obj.image.url}}" alt="{{obj.image.url}}" width="200px">
+    <form action="{% url 'post:like_post_view' %}" method="POST">
+        {%csrf_token%}
+        <input type="hidden" name="post_id" value="{{obj.id}}">
+        <button type="submit" class="btn btn-primary">
+            {%if profile not in obj.liked.all%}
+            <i>{{obj.num_likes}}Like</i>
+            {%else%}
+            <i>{{obj.num_likes}}Unlike</i>
+            {%endif%}
+        </button>
+    </form>
+    <hr>
+{%endfor%}
 {% endblock %}

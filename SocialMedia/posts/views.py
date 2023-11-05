@@ -3,8 +3,10 @@ from .models import Post,Like
 from .models import Profile
 from django.http import HttpResponse
 from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@login_required()
 def post_comment_create_listview(request):
     qs = Post.objects.all()
     profile = Profile.objects.get(username=request.user)
@@ -34,24 +36,22 @@ def like_unlike_post(request):
             post_obj.liked.add(profile)
 
         like, created = Like.objects.get_or_create(user=profile, post_id=post_id)
-
+        
         # Cập nhật lại giá trị value
+        # Nếu không có trường 'created'> đã tạo> Đã có dữ liệu trong db
         if not created:
-            if like.value=='Like':
-                like.value='Unlike'
+            if like.value =='Like':
+                like.value ='Unlike'
             else:
                 like.value='Like'
+        # Chưa like lần nào: chưa có dữ liệu database
         else:
             like.value='Like'
+            
+        post_obj.save()
+        like.save()
 
-            post_obj.save()
-            like.save()
+        
 
-        # data = {
-        #     'value': like.value,
-        #     'likes': post_obj.liked.all().count()
-        # }
-
-        # return JsonResponse(data, safe=False)
-    return redirect(reverse_lazy('main_post_view'))
-    return HttpResponse("Like thành công")
+    return redirect('/posts/')
+    # return HttpResponse("Like thành công")

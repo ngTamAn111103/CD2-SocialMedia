@@ -6,7 +6,6 @@ from profiles.models import Profile
 
 @receiver(post_save, sender=Like)
 def post_save_like(sender, instance, created, **kwargs):
-    print('post_save_like')
     user = instance.user
     post = instance.post
     if instance.value == "Like":
