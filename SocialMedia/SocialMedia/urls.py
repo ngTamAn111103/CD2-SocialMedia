@@ -28,8 +28,8 @@ urlpatterns = [
     # trang admin
     path('admin/', admin.site.urls),
 
-    # Trang hello
-    path('', home_view, name='home_view'),
+    # Trang index: Posts
+    path('', include('posts.urls'), name='posts'),
     # Vào trong url profile: http://127.0.0.1:8000/profiles/myprofile/
     path('profiles/', include('profiles.urls'), name='profiles'),
     
@@ -40,8 +40,6 @@ urlpatterns = [
     # đăng xuất
     path('logout', LogoutView.as_view(), name='logout'),
 
-    # Vào trong post
-    path('posts/', include('posts.urls'), name='posts'),
     
     
 

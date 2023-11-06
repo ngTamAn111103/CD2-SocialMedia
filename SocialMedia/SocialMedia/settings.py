@@ -122,11 +122,18 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
+# Đoạn code này định nghĩa tiền tố URL cho các tệp tĩnh. Tệp tĩnh là các tệp không được tạo động, 
+# chẳng hạn như CSS, JavaScript và hình ảnh. Giá trị 'static/' có nghĩa là tất cả các tệp tĩnh sẽ được phục vụ từ thư mục /static/.
 STATIC_URL = 'static/'
+
+# Đoạn code này định nghĩa một danh sách các thư mục nơi Django nên tìm kiếm các tệp tĩnh. 
+# Giá trị [os.path.join(BASE_DIR, 'static_project')] có nghĩa là Django sẽ tìm kiếm các tệp tĩnh trong thư mục static_project trong thư mục gốc của dự án.
 STATICFILES_DIRS =[
     os.path.join(BASE_DIR, 'static_project')
 ]
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR),"static_cdn", "static_root")
+# Đoạn code này định nghĩa tiền tố URL cho các tệp media. Tệp media là các tệp được tạo động, 
+# chẳng hạn như ảnh và video được người dùng tải lên. Giá trị '/media/' có nghĩa là tất cả các tệp media sẽ được phục vụ từ thư mục /media/.
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR),"static_cdn", "media_root")
 # Default primary key field type

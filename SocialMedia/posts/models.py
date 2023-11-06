@@ -3,6 +3,8 @@ from django.db import models
 from django.core.validators import FileExtensionValidator
 # Xử lý user like bài
 from profiles.models import Profile
+from django.utils import timezone
+from datetime import datetime
 
 
 # Create your models here.
@@ -25,7 +27,37 @@ class Post (models.Model):
         return self.commented.all()
     def num_comments2 (self):
         return self.comment_set.all().count()
-    
+    # lấy thời gian đăng bài
+    def get_time_elapsed(post):
+        current_time = datetime.now(timezone.utc)
+        post_created_time = post.created
+        time_difference = current_time - post_created_time
+
+        if time_difference.days > 0:
+            if time_difference.days == 1:
+                time_elapsed_string = f"{time_difference.days} ngày trước"
+            else:
+                time_elapsed_string = f"{time_difference.days} ngày trước"
+        elif time_difference.seconds > 3600:
+            time_difference_hours = time_difference.seconds // 3600
+            if time_difference_hours == 1:
+                time_elapsed_string = f"{time_difference_hours} giờ trước"
+            else:
+                time_elapsed_string = f"{time_difference_hours} giờ trước"
+        elif time_difference.seconds > 60:
+            time_difference_minutes = time_difference.seconds // 60
+            if time_difference_minutes == 1:
+                time_elapsed_string = f"{time_difference_minutes} phút trước"
+            else:
+                time_elapsed_string = f"{time_difference_minutes} phút trước"
+        else:
+            time_elapsed_string = f"{time_difference.seconds} giây trước"
+
+        return time_elapsed_string
+
+
+
+
     class Meta:
         ordering = ('-created',)
         
