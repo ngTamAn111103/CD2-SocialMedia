@@ -92,7 +92,7 @@ class Login(LoginView):
     template_name = 'account/login.html'
     form_class = LoginModelForm
 
-    success_url = reverse_lazy('profiles:my_profile_view')  # Thay 'index' bằng tên view của trang index.html của bạn
+    success_url = reverse_lazy('/')  # Thay 'index' bằng tên view của trang index.html của bạn
     def form_valid(self, form):
         # Đăng nhập người dùng
         login(self.request, form.get_user())

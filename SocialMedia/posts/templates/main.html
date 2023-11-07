@@ -114,16 +114,25 @@ Trang chủ
         <div class="main-middle">
             <div class="middle-container">
                 <!--=================Post Input Start=================-->
-                <form class="add-post input-post">
-                    <div class="profile-picture" id="my-profile-picture">
+                <!-- Đăng bài: Tâm An -->
+                <!-- THÀNH: SỬA POST BÀI CSS -->
+                <form class="add-post input-post" action="" method="POST" enctype="multipart/form-data">
+                    {%csrf_token%}
+                    {{ p_form.as_p }}
+
+                    <!-- Của Thành -->
+                    <!-- <div class="profile-picture" id="my-profile-picture">
                         <img src="{{profile.avatar.url}}" alt="">
                     </div>
-                    <input type="text" placeholder="What's on your mind?" id="add-post">
-                    <label for="add-post" class="btn btn-primary" id="create-lg">Post</label>
+                    <input type="text" placeholder="What's on your mind?" id="add-post"> -->
+
+                    <!-- <label for="add-post" class="btn btn-primary" id="create-lg">Post</label>  -->
+                    <button type="submit" name="submit_p_form" class="btn btn-primary">Post</button>
+
                 </form>
                 <div class="feeds">
                     <!-- Bài đăng cá nhân -->
-                    
+
 
                     <!-- Danh sách bài post -->
                     {%for post in qs%}
@@ -153,10 +162,14 @@ Trang chủ
 
                         <!-- Nội dung -->
                         <p>{{post.content}}</p>
-                        <!-- Feed Img -->
+                        <!-- Feed Img --> 
+                        {% if post.image %}
                         <div class="feed-img">
                             <img src="{{post.image.url}}" alt="{{post.image.url}}">
                         </div>
+                        {%endif%}
+                       
+
                         <!-- Feed Action Aria -->
                         <div class="action-button">
                             <div class="interaction-button">
@@ -166,12 +179,21 @@ Trang chủ
                                     {%csrf_token%}
                                     <input type="hidden" name="post_id" value="{{post.id}}">
                                     {%if profile not in post.liked.all%}
-                                        <button type="submit">
-                                            <span><i class="fa fa-heart"></i></span>
-                                        </button>
+                                    <button type="submit">
+                                        <span><i class="fa fa-heart"></i></span>
+                                    </button>
                                     {%else%}
-                                        <button type="submit">Unlike</button>
+                                    <!-- THÀNH: TRÁI TYM MÀU ĐEN -->
+                                    <button type="submit">Unlike</button>
                                     {%endif%}
+                                </form>
+                                <!-- nút cmt: Tâm An-->
+                                <!-- THÀNH: SỬA Bình luận -->
+                                <form action="" method="post">
+                                    {%csrf_token%}
+                                    {{c_form.as_p}}
+                                    <input type="hidden" name="post_id" value="{{post.id}}">
+                                    <button type="submit" name="submit_c_form" class="btn btn-primary">Comment</button>
                                 </form>
 
                                 <!-- Like + cmt: Thành -->
@@ -179,24 +201,57 @@ Trang chủ
                                 <!-- <span><i class="fa fa-comment-dots"></i></span> -->
                             </div>
                         </div>
-                        <textarea placeholder="Bình luận..." class="command" rows="1"></textarea>
-                        <!-- Like By -->
+                        <!-- Thành -->
+                        <!-- <textarea placeholder="Bình luận..." class="command" rows="1"></textarea> -->
+                        <!-- Like By: Tâm An -->
                         <div class="liked-by">
-                            <span><img src="{%static 'images/user.jpg'%}" alt="{%static 'images/user.jpg'%}"></span>
-                            <span><img src="{%static 'images/user1.jpeg'%}" alt="{%static 'images/user1.jpeg'%}"></span>
-                            <p><b>Jhon Wiliams</b>and <b>77 comments other</b></p>
+                            <!-- Chưa thằng nào like -->
+                            {% if post.num_likes == 0 %}
+                            
+                            <!-- 1 thằng like -->
+                            {% elif post.num_likes == 1 %}
+
+                            <span><img src="{{post.get_likes.first.avatar.url}}"
+                                    alt="{{post.get_likes.first.avatar.url}}"></span>
+                            <p><b>{{post.get_likes.first.first_name}} {{post.get_likes.first.last_name}}</b></p>
+                            <!-- Nhiều thằng like -->
+                            {% else%}
+
+                            <span><img src="{{post.get_likes.first.avatar.url}}"
+                                    alt="{{post.get_likes.first.avatar.url}}"></span>
+                            {% for like in post.get_likes %}
+                            {% if forloop.counter == 2 %}
+                            <!-- Lấy phần tử thứ 2 -->
+                            <span><img src="{{like.avatar.url}}" alt="{%static 'images/user1.jpeg'%}"></span>
+                            {% endif %}
+                            {% endfor %}
+
+                            <p><b>{{post.get_likes.first.first_name}} {{post.get_likes.first.last_name}}</b>
+                                and <b>{{ post.num_likes|add:"-1" }}
+                                    comments other</b></p>
+                            {% endif %}
+
                         </div>
-                        <!-- Caption -->
-                        <div class="caption">
-                            <div class="title">Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                                Qui recusandae impedit aliquam non, velit alias maxime tenetur fuga et numquam.</div>
-                            <p></p><b>Lana White</b>Lorem ipsum dolor sit amet consectetur adipisicing.
-                            <span class="hars-tag">#lifestyle</span> </p>
+                        <!-- Caption: Thành -->
+                        <!-- THÀNH: sửa css bo tròn bg, br, màu nền -->
+                        {%for cmt in post.comment_set.all%}
+                        <div class="caption" style="background-color: antiquewhite;">
+                            <!-- <div class="title">Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                                Qui recusandae impedit aliquam non, velit alias maxime tenetur fuga et numquam.</div> -->
+                            <!-- <h1>{{cmt.body}}</h1> -->
+                            <p></p><b>{{cmt.user.first_name}} {{cmt.user.last_name}}</b>
+                            <br>
+                            {{cmt.body}}
+                            <!-- <span class="hars-tag">#lifestyle</span>  -->
+                            </p>
                         </div>
-                        <!-- Comments -->
-                        <div class="comments text-gry">
+                        {%endfor%}
+
+                        <!-- Comments: Thành -->
+                        <!-- <div class="comments text-gry">
                             View all comments
-                        </div>
+                        </div> -->
+
                     </div>
                     {%endfor%}
 

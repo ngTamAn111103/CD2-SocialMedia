@@ -1,5 +1,5 @@
 
-{% extends 'base.html' %}
+{% extends 'main/navbar.html' %}
 
 {% block title %}
 Đăng nhập
@@ -7,13 +7,15 @@
 
 {% block content %}
 
-
-<h1>Đăng nhập</h1>
-
-<form action="" method="POST">
-  {% csrf_token %}
-  {{ form.as_p }}
+<main>
   
-  <button type="submit" class="btn btn-success">Đăng nhập</button>
-</form>
+  <h1>Đăng nhập</h1>
+  
+  <form action="" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    
+    <button type="submit" class="btn btn-success">Đăng nhập</button>
+  </form>
+</main>
 {% endblock  %}

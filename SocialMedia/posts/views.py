@@ -3,16 +3,40 @@ from .models import Post,Like
 from .models import Profile
 from django.http import HttpResponse
 from django.urls import reverse_lazy
-from django.contrib.auth.decorators import login_required
-
+from django.contrib.auth.decorators import login_required 
+from .forms import PostModelForm,CommentModelForm
+ 
 # Create your views here.
 @login_required()
 def post_comment_create_listview(request):
     qs = Post.objects.all()
     profile = Profile.objects.get(username=request.user)
+    # new post form
+    p_form = PostModelForm(request.POST or None, request.FILES or None)
+    c_form = CommentModelForm(request.POST or None)
+    # Lấy author người dùng đăng bài == login
+    profile = Profile.objects.get(username=request.user)
+    # Nếu form hợp lệ
+    if p_form.is_valid():
+        instance = p_form.save(commit=False)
+        instance.author = profile
+        instance.save()
+        p_form = PostModelForm()
+    # new comment form
+    if c_form.is_valid():
+        instance = c_form.save(commit=False)
+        instance.user = profile
+        instance.post = Post.objects.get(id= request.POST.get('post_id'))
+        instance.save()
+        c_form = CommentModelForm
+    
+    
+    # mảng return về
     context = {
         'qs': qs,
         'profile': profile,
+        'p_form': p_form,
+        'c_form': c_form,
     }
 
     return render(request, 'main.html', context)
