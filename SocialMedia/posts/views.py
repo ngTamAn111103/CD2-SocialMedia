@@ -53,5 +53,5 @@ def like_unlike_post(request):
 
         
 
-    return redirect('/posts/')
+    return redirect('/')
     # return HttpResponse("Like thành công")

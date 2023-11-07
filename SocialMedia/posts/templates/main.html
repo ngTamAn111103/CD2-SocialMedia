@@ -30,12 +30,12 @@ Trang chủ
             <!------------------Start Aside Bar------------------>
             <aside>
                 <a class="menu-item active">
-                    <span><img src="images/svg/home.svg" alt=""></span>
+                    <span><img src="{%static 'images/svg/home.svg'%}" alt=""></span>
                     <h3>Home</h3>
                 </a>
 
                 <a class="menu-item" id="Notify-box">
-                    <span><img src="images/svg/bell.svg" alt=""></span>
+                    <span><img src="{%static 'images/svg/bell.svg'%}" alt=""></span>
                     <small class="notfy-counter" id="ntCounter1">5+</small>
                     <h3>Notification</h3>
                     <!------------------Notification Box Start------------------>
@@ -90,13 +90,13 @@ Trang chủ
                 </a>
 
                 <a class="menu-item" id="messageMenu">
-                    <span><img src="images/svg/messages.svg" alt=""></span>
+                    <span><img src="{%static 'images/svg/messages.svg'%}" alt="{%static 'images/svg/bell.svg'%}"></span>
                     <small class="notfy-counter" id="notifyCoutner2">3</small>
                     <h3>Message</h3>
                 </a>
 
                 <a class="menu-item" id="theme">
-                    <span><img src="images/svg/palette.svg" alt=""></span>
+                    <span><img src="{%static 'images/svg/palette.svg'%}" alt=""></span>
                     <h3>Theme</h3>
                 </a>
 
@@ -116,219 +116,91 @@ Trang chủ
                 <!--=================Post Input Start=================-->
                 <form class="add-post input-post">
                     <div class="profile-picture" id="my-profile-picture">
-                        <img src="images/user.jpg" alt="">
+                        <img src="{{profile.avatar.url}}" alt="">
                     </div>
                     <input type="text" placeholder="What's on your mind?" id="add-post">
                     <label for="add-post" class="btn btn-primary" id="create-lg">Post</label>
                 </form>
                 <div class="feeds">
-                    <div class="feed myfeed">
-                        <!-- Feed Top -->
-                        <div class="feed-top">
-                            <div class="user">
-                                <div class="profile-picture" id="my-profile-picture">
-                                    <img src="images/user.jpg" alt="">
-                                </div>
-                                <div class="info">
-                                    <h3>Irfan Habib</h3>
-                                    <div class="time text-gry">
-                                       <small>PAKISTAN, <span>2 DAYS AGO</span></small> 
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="edit">
-                                <img src="images/svg/three-dots.svg" alt="">
-                                <ul class="edit-menu">
-                                    <li><i class="fa fa-pen"></i>Edit</li>
-                                    <li><i class="fa fa-trash"></i>Delete</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- Feed Img -->
-                        <div class="feed-img">
-                            <img src="images/post1.webp" alt="">
-                        </div>
-                        <!-- Feed Action Aria -->
-                        <div class="action-button">
-                            <div class="interaction-button">
-                                <span><i class="fa fa-heart"></i></span>
-                                <span><i class="fa fa-comment-dots"></i></span>
-                            </div>
-                        </div>
-                        <textarea placeholder="Bình luận..." class="command" rows="1"></textarea>
-                        <!-- Like By -->
-                        <div class="liked-by">
-                            <span><img src="images/user.jpg" alt=""></span>
-                            <span><img src="images/user1.jpeg" alt=""></span>
-                            <p><b>Jhon Wiliams</b>and <b>77 comments other</b></p>
-                        </div>
-                        <!-- Caption -->
-                        <div class="caption">
-                            <div class="title">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, adipisci?</div>
-                            <p></p><b>Lana White</b>Lorem ipsum dolor sit amet consectetur adipisicing. 
-                                <span class="hars-tag">#lifestyle</span> </p>
-                        </div>
-                        <!-- Comments -->
-                        <div class="comments text-gry">
-                            View all comments
-                        </div>
-                    </div>
+                    <!-- Bài đăng cá nhân -->
+                    
+
+                    <!-- Danh sách bài post -->
+                    {%for post in qs%}
                     <div class="feed">
                         <!-- Feed Top -->
                         <div class="feed-top">
                             <div class="user">
                                 <div class="profile-picture">
-                                    <img src="images/user1.jpeg" alt="">
+                                    <img src="{{post.author.avatar.url}}" alt="{{post.author.avatar.url}}">
                                 </div>
                                 <div class="info">
-                                    <h3>Irfan Habib</h3>
+                                    <h3>{{post.author.first_name}} {{post.author.last_name}}</h3>
                                     <div class="time text-gry">
-                                       <small>PAKISTAN, <span>2 DAYS AGO</span></small> 
+                                        <small>{{post.author.country}}, <span>{{post.get_time_elapsed}}</span></small>
                                     </div>
                                 </div>
                             </div>
                             <div class="edit">
-                                <img src="images/svg/three-dots.svg" alt="">
+                                <img src="{%static 'images/svg/three-dots.svg'%}"
+                                    alt="{%static 'images/svg/three-dots.svg'%}">
                                 <ul class="edit-menu">
                                     <li><i class="fa fa-pen"></i>Edit</li>
                                     <li><i class="fa fa-trash"></i>Delete</li>
                                 </ul>
                             </div>
                         </div>
+
+                        <!-- Nội dung -->
+                        <p>{{post.content}}</p>
                         <!-- Feed Img -->
                         <div class="feed-img">
-                            <img src="images/post1.webp" alt="">
+                            <img src="{{post.image.url}}" alt="{{post.image.url}}">
                         </div>
                         <!-- Feed Action Aria -->
                         <div class="action-button">
                             <div class="interaction-button">
-                                <span><i class="fa fa-heart"></i></span>
-                                <span><i class="fa fa-comment-dots"></i></span>
+
+                                <!-- nút like: Tâm An-->
+                                <form action="{% url 'post:like_post_view' %}" method="post">
+                                    {%csrf_token%}
+                                    <input type="hidden" name="post_id" value="{{post.id}}">
+                                    {%if profile not in post.liked.all%}
+                                        <button type="submit">
+                                            <span><i class="fa fa-heart"></i></span>
+                                        </button>
+                                    {%else%}
+                                        <button type="submit">Unlike</button>
+                                    {%endif%}
+                                </form>
+
+                                <!-- Like + cmt: Thành -->
+                                <!-- <span><i class="fa fa-heart"></i></span> -->
+                                <!-- <span><i class="fa fa-comment-dots"></i></span> -->
                             </div>
                         </div>
                         <textarea placeholder="Bình luận..." class="command" rows="1"></textarea>
                         <!-- Like By -->
                         <div class="liked-by">
-                            <span><img src="images/user.jpg" alt=""></span>
-                            <span><img src="images/user1.jpeg" alt=""></span>
+                            <span><img src="{%static 'images/user.jpg'%}" alt="{%static 'images/user.jpg'%}"></span>
+                            <span><img src="{%static 'images/user1.jpeg'%}" alt="{%static 'images/user1.jpeg'%}"></span>
                             <p><b>Jhon Wiliams</b>and <b>77 comments other</b></p>
                         </div>
                         <!-- Caption -->
                         <div class="caption">
-                            <div class="title">Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
+                            <div class="title">Lorem ipsum dolor sit, amet consectetur adipisicing elit.
                                 Qui recusandae impedit aliquam non, velit alias maxime tenetur fuga et numquam.</div>
-                            <p></p><b>Lana White</b>Lorem ipsum dolor sit amet consectetur adipisicing. 
-                                <span class="hars-tag">#lifestyle</span> </p>
+                            <p></p><b>Lana White</b>Lorem ipsum dolor sit amet consectetur adipisicing.
+                            <span class="hars-tag">#lifestyle</span> </p>
                         </div>
                         <!-- Comments -->
                         <div class="comments text-gry">
                             View all comments
                         </div>
                     </div>
-                    <div class="feed">
-                        <!-- Feed Top -->
-                        <div class="feed-top">
-                            <div class="user">
-                                <div class="profile-picture">
-                                    <img src="images/user1.jpeg" alt="">
-                                </div>
-                                <div class="info">
-                                    <h3>Irfan Habib</h3>
-                                    <div class="time text-gry">
-                                       <small>PAKISTAN, <span>2 DAYS AGO</span></small> 
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="edit">
-                                <img src="images/svg/three-dots.svg" alt="">
-                                <ul class="edit-menu">
-                                    <li><i class="fa fa-pen"></i>Edit</li>
-                                    <li><i class="fa fa-trash"></i>Delete</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- Feed Img -->
-                        <div class="feed-img">
-                            <img src="images/post1.webp" alt="">
-                        </div>
-                        <!-- Feed Action Aria -->
-                        <div class="action-button">
-                            <div class="interaction-button">
-                                <span><i class="fa fa-heart"></i></span>
-                                <span><i class="fa fa-comment-dots"></i></span>
-                            </div>
-                        </div>
-                        <textarea placeholder="Bình luận..." class="command" rows="1"></textarea>
-                        <!-- Like By -->
-                        <div class="liked-by">
-                            <span><img src="images/user.jpg" alt=""></span>
-                            <span><img src="images/user1.jpeg" alt=""></span>
-                            <p><b>Jhon Wiliams</b>and <b>77 comments other</b></p>
-                        </div>
-                        <!-- Caption -->
-                        <div class="caption">
-                            <div class="title">Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
-                                Qui recusandae impedit aliquam non, velit alias maxime tenetur fuga et numquam.</div>
-                            <p></p><b>Lana White</b>Lorem ipsum dolor sit amet consectetur adipisicing. 
-                                <span class="hars-tag">#lifestyle</span> </p>
-                        </div>
-                        <!-- Comments -->
-                        <div class="comments text-gry">
-                            View all comments
-                        </div>
-                    </div>
-                    <div class="feed">
-                        <!-- Feed Top -->
-                        <div class="feed-top">
-                            <div class="user">
-                                <div class="profile-picture">
-                                    <img src="images/user1.jpeg" alt="">
-                                </div>
-                                <div class="info">
-                                    <h3>Irfan Habib</h3>
-                                    <div class="time text-gry">
-                                       <small>PAKISTAN, <span>2 DAYS AGO</span></small> 
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="edit">
-                                <img src="images/svg/three-dots.svg" alt="">
-                                <ul class="edit-menu">
-                                    <li><i class="fa fa-pen"></i>Edit</li>
-                                    <li><i class="fa fa-trash"></i>Delete</li>
-                                </ul>
-                            </div>
-                        </div>
-                        <!-- Feed Img -->
-                        <div class="feed-img">
-                            <img src="images/post1.webp" alt="">
-                        </div>
-                        <!-- Feed Action Aria -->
-                        <div class="action-button">
-                            <div class="interaction-button">
-                                <span><i class="fa fa-heart"></i></span>
-                                <span><i class="fa fa-comment-dots"></i></span>
-                            </div>
-                        </div>
-                        <textarea placeholder="Bình luận..." class="command" rows="1"></textarea>
-                        <!-- Like By -->
-                        <div class="liked-by">
-                            <span><img src="images/user.jpg" alt=""></span>
-                            <span><img src="images/user1.jpeg" alt=""></span>
-                            <p><b>Jhon Wiliams</b>and <b>77 comments other</b></p>
-                        </div>
-                        <!-- Caption -->
-                        <div class="caption">
-                            <div class="title">Lorem ipsum dolor sit, amet consectetur adipisicing elit. 
-                                Qui recusandae impedit aliquam non, velit alias maxime tenetur fuga et numquam.</div>
-                            <p></p><b>Lana White</b>Lorem ipsum dolor sit amet consectetur adipisicing. 
-                                <span class="hars-tag">#lifestyle</span> </p>
-                        </div>
-                        <!-- Comments -->
-                        <div class="comments text-gry">
-                            View all comments
-                        </div>
-                    </div>
+                    {%endfor%}
+
+
                 </div>
                 <!--=================Post Input End=================-->
             </div>
@@ -407,7 +279,7 @@ Trang chủ
                 </div>
             </div>
             <!------------End Message------------>
-            <!------------Start Firend Request------------>  
+            <!------------Start Firend Request------------>
             <div class="firend-rquest">
                 <h4>Request</h4>
                 <div class="request">
@@ -498,12 +370,108 @@ Trang chủ
                         </div>
                     </div>
                 </div>
-            </div>  
+            </div>
             <!------------End Firend Request------------>
         </div>
         <!--=================Main Right End=================-->
 
     </div>
 </main>
+<!------------------End Main Section------------------>
+<!------------------Start PopUps Aria------------------>
 
+<!------------------Start Profile-Popup------------------>
+<div class="popup profile-popup">
+    <div>
+        <div class="popup-box profile-popup-box">
+            <h1>Beg Joker</h1>
+            <p>@thebegjocker</p>
+            <div id="my-profile-picture">
+                <img src="images/user.jpg" alt="">
+            </div>
+            <label for="profile-upload" class="btn btn-primary btn-lg"><a href="profile.html">View Profile</a></label>
+            <button class="btn btn-primary btn-lg"><a href="login.html">Log Out</a></button>
+        </div>
+        <span class="close"><i class="fa fa-close"></i></span>
+    </div>
+</div>
+<!------------------End Profile-Popup------------------>
+<!------------------Start Add Popup------------------>
+<div class="popup add-post-popup">
+    <div>
+        <form class="popup-box add-post-popup">
+            <h1>Add New Post</h1>
+            <div class="row post-title">
+                <label>Title</label>
+                <input type="text" placeholder="What's on your mind?" id="add-post">
+            </div>
+            <div class="row post-img">
+                <img src="" alt="" id="postIMg">
+                <label for="feed-pic-upload" class="feed-upload-button">
+                    <span><i class="fa fa-add"></i></span>
+                    Upload A Picture</label>
+                <input type="file" accept="images/jpg, images/png, images/jpeg" id="feed-pic-upload">
+                <input type="submit" class="btn btn-primary btn-lg" value="Add Post">
+            </div>
+        </form>
+        <span class="close"><i class="fa fa-close"></i></span>
+    </div>
+</div>
+<!------------------End Add Popup------------------>
+<!------------------Start Theme Customize Popup------------------>
+<div class="popup theme-customize">
+    <div>
+        <div class="popup-box theme-customize-popup-box">
+            <h1>Coustomize Your Theme</h1>
+            <p>Manege Your Font Size, Color, and Background</p>
+            <!-----------------Font Size----------------->
+            <div class="font-size">
+                <h4>Font-Size</h4>
+                <div>
+                    <div>
+                        <h6>Aa</h6>
+                    </div>
+                    <div class="choose-size">
+                        <span class="font-size-1"></span>
+                        <span class="font-size-2 active"></span>
+                        <span class="font-size-3"></span>
+                        <span class="font-size-4"></span>
+                        <span class="font-size-5"></span>
+                    </div>
+                    <div>
+                        <h3>Aa</h3>
+                    </div>
+                </div>
+            </div>
+            <!----------------Primary Colors---------------->
+            <div class="colors">
+                <h4>Color</h4>
+                <div class="choose-color">
+                    <span class="color-1 active"></span>
+                    <span class="color-2 "></span>
+                    <span class="color-3 "></span>
+                    <span class="color-4 "></span>
+                    <span class="color-5 "></span>
+                </div>
+            </div>
+            <!----------------Background Colors---------------->
+            <div class="background">
+                <h4>Background</h4>
+                <div class="choose-bg">
+                    <div class="bg1 active">
+                        <span></span>
+                        <h5>Light</h5>
+                    </div>
+                    <div class="bg2">
+                        <span></span>
+                        <h5>Dark</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <span class="close"><i class="fa fa-close"></i></span>
+    </div>
+</div>
+<!------------------End Theme Customize Popup------------------>
+<!------------------End PopUps Aria------------------>
 {% endblock %}

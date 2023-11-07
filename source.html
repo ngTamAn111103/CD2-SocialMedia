@@ -1,0 +1,54 @@
+<!-- bài đăng cá nhân -->
+<div class="feed myfeed">
+    <!-- Feed Top -->
+    <div class="feed-top">
+        <div class="user">
+            <div class="profile-picture" id="my-profile-picture">
+                <img src="{{profile.avatar.url}}" alt="{{profile.avatar.url}}">
+            </div>
+            <div class="info">
+                <h3>{{profile.first_name}} {{profile.last_name}}</h3>
+                <div class="time text-gry">
+                    <small>{{profile.country}}, <span>Vừa xong</span></small>
+                </div>
+            </div>
+        </div>
+        <div class="edit">
+            <img src="{%static 'images/svg/three-dots.svg'%}" alt="">
+            <ul class="edit-menu">
+                <li><i class="fa fa-pen"></i>Edit</li>
+                <li><i class="fa fa-trash"></i>Delete</li>
+            </ul>
+        </div>
+    </div>
+    <h3>Biển đẹp quá</h3>
+    <!-- Feed Img -->
+    <div class="feed-img">
+        <img src="{%static 'images/post1.webp'%}" alt="{%static 'images/post1.webp'%}">
+    </div>
+    <!-- Feed Action Aria -->
+    <div class="action-button">
+        <div class="interaction-button">
+            <span><i class="fa fa-heart"></i></span>
+            <span><i class="fa fa-comment-dots"></i></span>
+        </div>
+    </div>
+    <textarea placeholder="Bình luận..." class="command" rows="1"></textarea>
+    <!-- Like By -->
+    <div class="liked-by">
+        <span><img src="images/user.jpg" alt=""></span>
+        <span><img src="images/user1.jpeg" alt=""></span>
+        <p><b>Jhon Wiliams</b>and <b>77 comments other</b></p>
+    </div>
+    <!-- Caption -->
+    <div class="caption">
+        <div class="title">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere,
+            adipisci?</div>
+        <p></p><b>Lana White</b>Lorem ipsum dolor sit amet consectetur adipisicing.
+        <span class="hars-tag">#lifestyle</span> </p>
+    </div>
+    <!-- Comments -->
+    <div class="comments text-gry">
+        View all comments
+    </div>
+</div>
