@@ -32,9 +32,8 @@ def my_profile_view(request):
     cover = profile.cover
     # Lấy danh sách bài viết của bản thân
     my_posts = Post.objects.filter(author=profile).all()
-    # Hiển thị thông tin trong form của người dùng đang đăng nhạp
-    form = ProfileModelForm(request.POST or None, request.FILES or None, instance=profile)
-    confirm = False
+    
+    
     # new comment form
     c_form = CommentModelForm(request.POST or None)
     # danh sách Relationship có liên quan đến mình + đã accepted
@@ -69,11 +68,7 @@ def my_profile_view(request):
             # Xóa bài viết
             Post.objects.filter(id=post_del_id).delete()
             return redirect('/profiles/myprofile/')  # Chuyển hướng sau khi gửi thành công
-        # Form hợp lệ
-        if form.is_valid():
-            #print("if form.is_valid():")
-            form.save()
-            confirm = True
+        
         # edit post
         elif edit_p_form.is_valid() & (post_edit_id is not None):
             #print("elif edit_p_form.is_valid():")
@@ -105,8 +100,6 @@ def my_profile_view(request):
         
     context = {
         'profile': profile,
-        'form': form,
-        'confirm': confirm,
         'friend_list':my_friends,
         'my_posts':my_posts,
         'c_form':c_form,
@@ -381,3 +374,57 @@ def remove_from_friends(request):
         return redirect(request.META.get('HTTP_REFERER'))
     return redirect('profiles:my-profile-view')
 
+
+
+# Hàm change profile
+def change_profile(request):
+    profile = get_object_or_404(Profile, username=request.user)
+    confirm = False
+    # Hiển thị thông tin trong form của người dùng đang đăng nhạp
+    form = ProfileModelForm(request.POST or None, request.FILES or None, instance=profile)
+    if request.method == 'POST':
+        # Form hợp lệ
+        if form.is_valid():
+            #print("if form.is_valid():")
+            form.save()
+            confirm = True
+    context = {
+        'profile': profile,
+        'form': form,
+        'confirm': confirm,
+        
+
+
+    }
+    #print('================================================================')
+    #print('================================================================')
+    #print('================================================================')
+    return render(request, 'profiles/change_profile.html', context)
+
+
+# Hàm xem toàn bộ danh sách bạn bè
+class FriendsListView(ListView):
+    model = Profile
+    template_name = 'profiles/detail_all_friends.html'
+    def get_object(self, slug=None):
+        slug = self.kwargs.get('slug')
+        profile = Profile.objects.get(slug=slug)
+        # trả về profile của thằng detail
+        return profile
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = User.objects.get(username=self.request.user)
+        profile = Profile.objects.get(username=user)
+        context['profile'] = profile
+
+        
+
+       
+
+
+        context['friends'] = self.get_object().get_friends()
+        context['len_friends'] =True if len(self.get_object().get_friends()) > 0 else False
+
+        
+        
+        return context

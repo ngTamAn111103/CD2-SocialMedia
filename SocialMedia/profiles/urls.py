@@ -1,5 +1,17 @@
 from django.urls import path, re_path
-from .views import my_profile_view,invites_received_view, profiles_list_view, invite_profiles_list_view, ProfileListView,send_invation, remove_from_friends,accept_invite,reject_invite,ProfileDetailView
+from .views import (my_profile_view,
+                    invites_received_view, 
+                    profiles_list_view, 
+                    invite_profiles_list_view, 
+                    ProfileListView,
+                    send_invation, 
+                    remove_from_friends,
+                    accept_invite,
+                    reject_invite,
+                    ProfileDetailView,
+                    change_profile,
+                    FriendsListView
+                    )
 from django.contrib.auth import views as auth_views
 from . import views
 from django.contrib.auth.models import User
@@ -21,6 +33,9 @@ urlpatterns =[
     path('myprofile/all_profiles/', ProfileListView.as_view(), name='all_profiles_view'),
     # Link này cùng nhau tạo ra trang web hiển thị danh sách các profiles có sẵn để mời kết bạn, loại trừ những người đã có mối quan hệ chấp nhận.
     path('myprofile/to_invite/', invite_profiles_list_view, name='invite_profiles_view'),
+    # Thay đổi thông tin cá nhân profile
+    path('myprofile/change_profile/', change_profile, name='change_profile'),
+    path('<slug>/friends', views.FriendsListView.as_view(), name='friends'),
 
     
 

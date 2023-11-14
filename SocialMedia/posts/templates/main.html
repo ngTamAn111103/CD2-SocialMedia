@@ -101,6 +101,10 @@ Trang chủ
                     <span><img src="{%static 'images/svg/palette.svg'%}" alt=""></span>
                     <h3>Theme</h3>
                 </a>
+                <a class="menu-item" id="group">
+                    <span><img src="{%static 'images/svg/palette.svg'%}" alt=""></span>
+                    <h3>Group</h3>
+                </a>
 
                 <!------------------Add Post Btn------------------>
 
@@ -162,9 +166,9 @@ Trang chủ
                         <div class="popup edit_post{{post.id}}">
                             <div>
                                 <div class="popup-box edit_post-popup-box">
-                                    <h1>Edit post</h1>
+                                    <h1 class="h1-editpost">Edit post</h1>
 
-                                    <form action="" enctype="multipart/form-data" method="post">
+                                    <form action="" enctype="multipart/form-data" method="post" class="form-edit-post">
                                         {%csrf_token%}
                                         <p><label for="id_content">Content:</label> <textarea name="content" cols="40"
                                                 rows="10" required="" id="id_content">{{post.content}}</textarea></p>
@@ -352,7 +356,7 @@ Trang chủ
                             </div>
                             <!-- Caption: Thành -->
                             <!-- THÀNH: sửa css bo tròn bg, br, màu nền -->
-                            {%for cmt in post.comment_set.all%}
+                            {%for cmt in post.comment_set.all|slice:":5"%}
                             <div class="caption caption{{cmt.id}}"
                                 style="background-color: antiquewhite; margin-bottom: 10px;">
                                 <!-- <div class="title">Lorem ipsum dolor sit, amet consectetur adipisicing elit.
@@ -548,7 +552,7 @@ Trang chủ
 
                     <a href="{%url 'profiles:my_invites_view'%}"><h4>Request</h4></a>
                     
-                    {%for i in friend_requests%}
+                    {%for i in friend_requests|slice:":2"%}
                     {%if i.sender != profile%}
                     <div class="request">
 
@@ -767,3 +771,40 @@ Trang chủ
 
 
 {% endblock %}
+
+
+
+
+
+<div class="popup edit_post{{post.id}}">
+    <div>
+        <div class="popup-box edit_post-popup-box">
+            <h1 class="h1-editpost">Edit post</h1>
+
+            <form class="form-edit-post" action="" enctype="multipart/form-data" method="post">
+                {%csrf_token%}
+                <p><label for="id_content">Content:</label> <textarea name="content" cols="40"
+                        rows="10" required="" id="id_content">{{post.content}}</textarea></p>
+                <p><label for="id_image">Image:</label>
+                    <input type="file" name="image" id="id_image">
+                </p>
+                <p>
+                    <label for="id_visibility">Visibility:</label>
+                    <select name="visibility" id="id_visibility">
+                        {%if post.visibility == "Public"%}
+                        <option value="Public" selected="">Công khai</option>
+                        <option value="Friend">Bạn bè</option>
+                        {%else%}
+                        <option value="Public">Công khai</option>
+                        <option value="Friend" selected="">Bạn bè</option>
+                        {%endif%}
+
+                    </select>
+                </p>
+                <input type="hidden" name="post_edit_id" value="{{post.id}}">
+                <button type="submit" class="btnSua">Update</button>
+            </form>
+        </div>
+        <span class="close close_{{post.id}}"><i class="fa fa-close"></i></span>
+    </div>
+</div>

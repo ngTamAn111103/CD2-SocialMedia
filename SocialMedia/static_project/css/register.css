@@ -1,26 +1,5 @@
-:root {
-    --primary-color-hue: 252;
-    --color-dark-light-theme: 15%;
-    --color-light-light-theme: 92%;
-    --color-white-light-theme: 100%;
-    --color-white: hsl(255, 30%, var(--color-white-light-theme));
-    --color-light: hsl(255, 30%, var(--color-light-light-theme));
-    --color-gray: hsl(255, 15%, 60%);
-    --color-primary: hsl(var(--primary-color-hue), 75%, 60%);
-    --color-secondary: hsl(255, 100%, 90%);
-    --color-success: hsl(120, 95%, 60%);
-    --color-danger: hsl(0, 95%, 60%);
-    --color-dark: hsl(255, 30%, var(--color-dark-light-theme));
-    --color-black: hsl(255, 30%, 8%);
-
-    --boder-radius: 2rem;
-    --card-boder-radius: 1rem;
-    --search-padding: .6rem 1rem;
-    --card-padding: 1rem;
-    --btn-padding: .6rem 2rem;
-}
-
-body {
+/* Sửa toàn bộ 14.10.2023 */
+.register {
     font-family: Arial, Helvetica, sans-serif;
     display: flex;
     justify-content: center;
@@ -30,16 +9,18 @@ body {
     background: url('../images/background_login.avif') center no-repeat;
     background-size: cover;
 }
-
-h1 {
+.register label{
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+.h1-register {
     font-size: 3rem;
     font-weight: bold;
     text-align: center;
     color: var(--color-white);
 }
 
-input[type=text],
-input[type=password] {
+#id_first_name,#id_last_name,#id_password1,#id_password2,#id_birthday,#id_password_old,#id_password_old{
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -58,7 +39,7 @@ select{
     box-sizing: border-box;
 }   
 
-button {
+.btn-register {
     background-color: var(--color-primary);
     color: var(--color-white);
     padding: 14px 20px;
@@ -69,54 +50,27 @@ button {
     border-radius: var(--card-boder-radius);
     cursor: pointer;
     width: 100%;
-
 }
 
-button:hover {
+.btn-register:hover {
     opacity: 0.8;
 }
 
-.cancelbtn {
-    width: auto;
-    padding: 10px 18px;
-    background-color: #f44336;
-}
-
-.imgcontainer {
-    text-align: center;
-    margin: 24px 0 12px 0;
-}
-
-img.avatar {
-    width: 40%;
-    border-radius: 50%;
-}
-
-.container {
+.containerregister {
     padding: 16px;
 }
 
-span.psw {
-    float: right;
-    padding-top: 16px;
-}
-
-.form-container {
+.form-containerregister {
     width: 800px;
     padding: 20px;
     border: 1px solid #ccc;
     border-radius: var(--card-boder-radius);
 }
 
-.container {
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
 
-input[type="text"],
-input[type="password"] {
+
+#id_first_name,#id_last_name,#id_password1,#id_password2,
+#id_country,#id_gender,#id_birthday {
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;

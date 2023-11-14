@@ -2,6 +2,7 @@ from django import forms
 from .models import Profile, User,Relationship
 from django.contrib.auth.forms import UserCreationForm
 
+# Có dùng để sửa đổi profile trong main.html
 class ProfileModelForm(forms.ModelForm):
     class Meta:
         model = Profile
@@ -128,8 +129,6 @@ class SignUpModelForm(forms.ModelForm):
 # đăng ký các trường cho người dùng nhập
 
 # Trường để người dùng nhập dữ liệu
-
-
 class ChangePasswordModelForm(forms.ModelForm):
     password_old = forms.CharField(label='Mật khẩu cũ',widget=forms.PasswordInput)
     password1 = forms.CharField(label='Mật khẩu mới',widget=forms.PasswordInput)
@@ -153,5 +152,4 @@ class RelationshipModelForm(forms.ModelForm):
    
 
 
-    
     

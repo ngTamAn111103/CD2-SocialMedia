@@ -10,8 +10,9 @@
 {% endblock %}
 
 {% block content %}
+
 <main>
-    <div class="myprofile" >
+    <div class="myprofile">
         <div class="img_cover">
             <img src="{{cover.url}}" alt="">
         </div>
@@ -24,11 +25,13 @@
                 margin: 1rem 1rem;
                 background-size: cover;
             }
+
             .img_cover {
                 width: 100%;
                 height: 375px;
             }
-            .img_cover img{
+
+            .img_cover img {
                 width: 100%;
                 height: inherit;
             }
@@ -56,11 +59,18 @@
                     <span><img src="{%static 'images/svg/home.svg'%}" alt=""></span>
                     <h3>My profile</h3>
                 </a>
-                <a style="color: #211b32;" class="menu-item" href="/profiles/myprofile/change_password">
+                <a style="color: #211b32;" class="menu-item" href="{%url 'profiles:change_profile'%}">
+                    <span><img src="{%static 'images/svg/profile.svg'%}" alt=""></span>
+                    <h3>
+                        Change profile
+                    </h3>
+
+                </a>
+                <a style="color: #211b32;" class="menu-item" href="{%url 'profiles:change_password'%}">
                     <span><img src="{%static 'images/svg/key-solid.svg'%}" alt=""></span>
                     <h3>Change Password</h3>
                 </a>
-                <a style="color: #211b32;" class="menu-item" href="/logout">
+                <a style="color: #211b32;" class="menu-item" href="{%url 'logout'%}">
                     <span><img src="{%static 'images/svg/right-from-bracket-solid.svg'%}" alt=""></span>
                     <h3>Log out</h3>
                 </a>
@@ -349,7 +359,7 @@
 
                         </div>
                         <!-- Caption -->
-                        {%for cmt in post.comment_set.all%}
+                        {%for cmt in post.comment_set.all|slice:":2"%}
                         <div class="caption caption{{cmt.id}}"
                             style="background-color: antiquewhite; margin-bottom: 10px;">
                             <!-- <div class="title">Lorem ipsum dolor sit, amet consectetur adipisicing elit.
@@ -461,7 +471,8 @@
             <div class="messages">
                 <!------------------Message Top-------------------->
                 <div class="message-top">
-                    <h4>Friend</h4> <i class="fa-solid fa-user-group"></i>
+                    <h4>Friend</h4>
+                    <a href="" class="btn btn-success">All my friens</a>
                 </div>
                 <!-- Search Bar -->
                 <div class="message-search-bar">
@@ -469,7 +480,7 @@
                     <input type="search" placeholder="Search friend..." id="message-search">
                 </div>
                 <!------------Messag------------>
-                {% for i in friend_list %}
+                {% for i in friend_list|slice:":2"%}
                 <div class="message">
                     <div class="profile-picture">
                         <img src="{{i.avatar.url}}" alt="{{i.avtar.url}}">
@@ -484,7 +495,7 @@
                 </div>
                 {%endfor%}
             </div>
-            <div class="firend-rquest">
+            <!-- <div class="firend-rquest">
                 <h4>Request</h4>
                 <div class="request">
                     <div class="info">
@@ -574,7 +585,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </main>
@@ -651,6 +662,8 @@
         <span class="close"><i class="fa fa-close"></i></span>
     </div>
 </div>
+<!--  -->
+
 <!-- <div class="popup profile-popup">
   <div>
       <div class="popup-box profile-popup-box">

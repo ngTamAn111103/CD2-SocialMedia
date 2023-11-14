@@ -36,7 +36,7 @@ urlpatterns = [
     path('profiles/', include('profiles.urls'), name='profiles'),
     
     # đăng ký
-    path('signup', views.SignUp.as_view(), name='signup'),
+    path('register', views.SignUp.as_view(), name='signup'),
 
     # đăng nhập
     path("login", auth_views.LoginView.as_view(template_name="account/login.html"),name='login'),

@@ -1,21 +1,21 @@
-
 {% extends 'main/navbar.html' %}
 
 {% block title %}
 Đăng nhập
-{% endblock  %}
+{% endblock %}
 
 {% block content %}
 
-<main>
-  
-  <h1>Đăng nhập</h1>
-  
-  <form action="" method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    
-    <button type="submit" class="btn btn-success">Đăng nhập</button>
-  </form>
-</main>
-{% endblock  %}
+<body class="login">
+  <div class="form-containerlogin">
+    <h1 class="h1-login">Login</h1>
+    <form action="" method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <div class="containerlogin">
+        <button type="submit" class="btn btn-success button-login">Login</button>
+      </div>
+    </form>
+  </div>
+</body>
+{% endblock %}

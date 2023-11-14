@@ -70,3 +70,35 @@
 <input type="hidden" name="cmt_edit_id" value="{{cmt.id}}">
 <button style="font-weight: bold; display: none;" class="btn-send btn-send{{cmt.id}}"><i
     class="fa-regular fa-paper-plane"></i></button>
+
+    ------------------Add
+Model change profile
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Chỉnh sửa thông tin</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <img src="{{ profile.avatar.url }}" alt="{{ profile.avatar.name }}">
+
+      <form action="" method="POST" enctype='multipart/form-data'>
+        <div class="modal-body">
+          {% csrf_token %}
+          {{form.as_p}}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+          <button type="submit" class="btn btn-primary">Xác nhận</button>
+        </div>
+      </form>
+
+
+
+    </div>
+  </div>
+</div>

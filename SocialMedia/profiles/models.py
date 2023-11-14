@@ -130,6 +130,8 @@ class Profile(models.Model):
     # Lấy danh sách bạn bè
     def get_friends(self):
         return self.friends.all()
+    def get_friends_no(self):
+        return self.friends.all().count()
     
     # Lấy số lượng bạn bè
     def get_count_friends(self):
