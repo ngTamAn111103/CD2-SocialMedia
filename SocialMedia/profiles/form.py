@@ -1,5 +1,5 @@
 from django import forms
-from .models import Profile, User
+from .models import Profile, User,Relationship
 from django.contrib.auth.forms import UserCreationForm
 
 class ProfileModelForm(forms.ModelForm):
@@ -128,3 +128,30 @@ class SignUpModelForm(forms.ModelForm):
 # đăng ký các trường cho người dùng nhập
 
 # Trường để người dùng nhập dữ liệu
+
+
+class ChangePasswordModelForm(forms.ModelForm):
+    password_old = forms.CharField(label='Mật khẩu cũ',widget=forms.PasswordInput)
+    password1 = forms.CharField(label='Mật khẩu mới',widget=forms.PasswordInput)
+    password2 = forms.CharField(label='Xác nhận mật khẩu',widget=forms.PasswordInput)
+    class Meta:
+        model = User
+        fields = ('password_old','password1', 'password2')
+    
+    def clean_password2(self):
+        cleaned_data = super().clean()
+        password1 = cleaned_data.get('password1')
+        password2 = cleaned_data.get('password2')
+        
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError("Mật khẩu xác nhận không khớp.")
+        return cleaned_data
+class RelationshipModelForm(forms.ModelForm):
+    class Meta:
+        model = Relationship
+        fields = ('status',) 
+   
+
+
+    
+    

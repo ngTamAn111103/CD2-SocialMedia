@@ -24,12 +24,12 @@
 }
 
 .myprofile{
-    background: var(--color-white);
     padding: var(--card-padding);
     border-radius: var(--card-boder-radius);
-    margin: 1rem auto;
-    height: 1220px;
     padding-bottom: 40px;
+    height: 400px;
+    margin: 1rem 1rem;
+    background-size: cover;
 }
 .wapper {
     width: 100%;
@@ -176,3 +176,4 @@ h5 {
     width: 100%;
     font-weight: bold;
 }
+

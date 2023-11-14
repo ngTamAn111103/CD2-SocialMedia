@@ -10,13 +10,15 @@ Trang chủ
 <!------------------Start Main Section------------------>
 <main>
     <div class="container main-container">
-
-        <!--=================Main Left Start=================-->
         <div class="main-left">
+            <!-- <h1>test</h1>
+            {%for i in test%}
+            {{i}}
+            {%endfor%} -->
             <!------------------Profile Start------------------>
             <a class="profile">
                 <div class="profile-picture" id="my-profile-picture">
-                    <img src="{{profile.avatar.url}}" alt="">
+                    <img src="{{profile.avatar.url}}" alt="{{profile.avatar.url}}">
                 </div>
                 <div class="profile-handle">
                     <h4>{{profile.username}}</h4>
@@ -107,329 +109,505 @@ Trang chủ
             <label for="add-post" class="btn btn-primary btn-lg">Create Group</label>
             <!------------------End Aside Bar------------------>
         </div>
-        <!--=================Main Left End=================-->
-
-
-        <!--=================Main Middle Start=================-->
         <div class="main-middle">
             <div class="middle-container">
                 <!--=================Post Input Start=================-->
                 <!-- Đăng bài: Tâm An -->
                 <!-- THÀNH: SỬA POST BÀI CSS -->
-                <form class="add-post input-post" action="" method="POST" enctype="multipart/form-data">
-                    {%csrf_token%}
-                    {{ p_form.as_p }}
 
-                    <!-- Của Thành -->
-                    <!-- <div class="profile-picture" id="my-profile-picture">
+                <form class="add-post input-post" action="" method="POST" enctype="multipart/form-data">
+                    <div class="form-content">
+                        {%csrf_token%}
+                        {{ p_form.as_p }}
+
+                        <!-- Của Thành -->
+                        <!-- <div class="profile-picture" id="my-profile-picture">
                         <img src="{{profile.avatar.url}}" alt="">
                     </div>
                     <input type="text" placeholder="What's on your mind?" id="add-post"> -->
 
-                    <!-- <label for="add-post" class="btn btn-primary" id="create-lg">Post</label>  -->
-                    <button type="submit" name="submit_p_form" class="btn btn-primary">Post</button>
+                        <!-- <label for="add-post" class="btn btn-primary" id="create-lg">Post</label>  -->
 
+                        <button type="submit" name="submit_p_form" class="btn btn-primary btn-post">Post</button>
+                    </div>
                 </form>
+
                 <div class="feeds">
                     <!-- Bài đăng cá nhân -->
 
 
                     <!-- Danh sách bài post -->
                     {%for post in qs%}
-                    <div class="feed">
-                        <!-- Feed Top -->
-                        <div class="feed-top">
-                            <div class="user">
-                                <div class="profile-picture">
-                                    <img src="{{post.author.avatar.url}}" alt="{{post.author.avatar.url}}">
+                    <div class="page">
+                        <!-- Modal delete post -->
+                        <div class="popup delete_post{{post.id}}">
+                            <div>
+                                <div class="popup-box delete_post-popup-box">
+                                    <h1>Bạn có muốn xóa bài viết không?</h1>
+                                    <!-----------------Font Size----------------->
+
+                                    <!----------------Primary Colors---------------->
+
+                                    <!----------------Background Colors---------------->
+                                    <form action="" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="post_del_id" value="{{post.id}}">
+                                        <button type="submit" class="btnXoa">Delete</button>
+                                    </form>
                                 </div>
-                                <div class="info">
-                                    <h3>{{post.author.first_name}} {{post.author.last_name}}</h3>
-                                    <div class="time text-gry">
-                                        <small>{{post.author.country}}, <span>{{post.get_time_elapsed}}</span></small>
+                                <span class="close close_{{post.id}}"><i class="fa fa-close"></i></span>
+                            </div>
+                        </div>
+                        <!-- Model edit post -->
+                        <div class="popup edit_post{{post.id}}">
+                            <div>
+                                <div class="popup-box edit_post-popup-box">
+                                    <h1>Edit post</h1>
+
+                                    <form action="" enctype="multipart/form-data" method="post">
+                                        {%csrf_token%}
+                                        <p><label for="id_content">Content:</label> <textarea name="content" cols="40"
+                                                rows="10" required="" id="id_content">{{post.content}}</textarea></p>
+                                        <p><label for="id_image">Image:</label>
+                                            <input type="file" name="image" id="id_image">
+                                        </p>
+                                        <p>
+                                            <label for="id_visibility">Visibility:</label>
+                                            <select name="visibility" id="id_visibility">
+                                                {%if post.visibility == "Public"%}
+                                                <option value="Public" selected="">Công khai</option>
+                                                <option value="Friend">Bạn bè</option>
+                                                {%else%}
+                                                <option value="Public">Công khai</option>
+                                                <option value="Friend" selected="">Bạn bè</option>
+                                                {%endif%}
+
+                                            </select>
+                                        </p>
+                                        <input type="hidden" name="post_edit_id" value="{{post.id}}">
+                                        <button type="submit" class="btnSua">Update</button>
+                                    </form>
+                                </div>
+                                <span class="close close_{{post.id}}"><i class="fa fa-close"></i></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    {%if post.author.username.id == request.user.id %}
+                    <div class="feed myfeed">
+
+
+                        {%else%}
+                        <div class="feed">
+
+                            {%endif%}
+                            <!-- Feed Top -->
+                            <div class="feed-top">
+                                <div class="user">
+                                    <div class="profile-picture">
+                                        <img src="{{post.author.avatar.url}}" alt="{{post.author.avatar.url}}">
+                                    </div>
+                                    <div class="info">
+                                        <h3>{{post.author.first_name}} {{post.author.last_name}}</h3>
+                                        <div class="time text-gry">
+
+                                            <small>{{post.author.country}},
+                                                <span>{{post.get_time_elapsed}}</span>
+                                                {% if post.visibility == "Public" %}
+                                                <img src="{%static 'images/public_post.png'%}"
+                                                    alt="{%static 'images/public_post.png'%}"
+                                                    style="width: 15px; display: inline-block;">
+                                                {%else%}
+                                                <img src="{%static 'images/friend_post.png'%}"
+                                                    alt="{%static 'images/friend_post.png'%}"
+                                                    style="width: 15px; display: inline-block">
+                                                {%endif%}
+                                            </small>
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="edit">
+                                    <img src="{%static 'images/svg/three-dots.svg'%}"
+                                        alt="{%static 'images/svg/three-dots.svg'%}">
+                                    <ul class="edit-menu">
+                                        <li id="icon_edit{{post.id}}"><i class="fa fa-pen"></i>Edit</li>
+                                        <li id="icon_delete{{post.id}}"><i class="fa fa-trash"></i>Delete</li>
+                                    </ul>
+                                </div>
                             </div>
-                            <div class="edit">
-                                <img src="{%static 'images/svg/three-dots.svg'%}"
-                                    alt="{%static 'images/svg/three-dots.svg'%}">
-                                <ul class="edit-menu">
-                                    <li><i class="fa fa-pen"></i>Edit</li>
-                                    <li><i class="fa fa-trash"></i>Delete</li>
-                                </ul>
+
+                            <script>
+                                document.querySelector('#icon_delete{{post.id}}').addEventListener('click', () => {
+                                    document.querySelector('.delete_post{{post.id}}').style.display = 'flex'
+                                });
+                                document.querySelector('#icon_edit{{post.id}}').addEventListener('click', () => {
+                                    document.querySelector('.edit_post{{post.id}}').style.display = 'flex'
+
+                                });
+                                document.querySelectorAll('.close_{{post.id}}').forEach(AllCloser => {
+                                    AllCloser.addEventListener('click', () => {
+
+
+                                        document.querySelector('.delete_post{{post.id}}').style.display = 'none'
+                                        document.querySelector('.edit_post{{post.id}}').style.display = 'none'
+
+                                    })
+                                });
+                            </script>
+                            <!-- Nội dung -->
+                            <p>{{post.content}}</p>
+
+
+                            <!-- Feed Img 
+                        Kiểm tra hình ảnh có tồn tại-->
+                            {% if post.image %}
+
+                            <!-- Kiểm tra đuôi file  là video-->
+                            {% if post.get_image_extension == ".MP4" or post.get_image_extension == ".MOV"%}
+
+                            <!-- <video class="video-fluid" autoplay loop style="width: 250px;">
+                                <source src="{{post.image.url}}" type="video/mp4" />
+                            </video> -->
+                            <video width="250px" controls>
+                                <source src="{{post.image.url}}" type="video/mp4">
+                                <source src="{{post.image.url}}" type="video/ogg">
+                                Your browser does not support HTML video.
+                            </video>
+                            {%else%}
+                            <div class="feed-img">
+                                <img src="{{post.image.url}}" alt="{{post.image.url}}">
                             </div>
-                        </div>
 
-                        <!-- Nội dung -->
-                        <p>{{post.content}}</p>
-                        <!-- Feed Img --> 
-                        {% if post.image %}
-                        <div class="feed-img">
-                            <img src="{{post.image.url}}" alt="{{post.image.url}}">
-                        </div>
-                        {%endif%}
-                       
+                            {%endif%}
+                            {%endif%}
 
-                        <!-- Feed Action Aria -->
-                        <div class="action-button">
-                            <div class="interaction-button">
 
-                                <!-- nút like: Tâm An-->
-                                <form action="{% url 'post:like_post_view' %}" method="post">
-                                    {%csrf_token%}
-                                    <input type="hidden" name="post_id" value="{{post.id}}">
-                                    {%if profile not in post.liked.all%}
-                                    <button type="submit">
-                                        <span><i class="fa fa-heart"></i></span>
-                                    </button>
-                                    {%else%}
-                                    <!-- THÀNH: TRÁI TYM MÀU ĐEN -->
-                                    <button type="submit">Unlike</button>
-                                    {%endif%}
-                                </form>
-                                <!-- nút cmt: Tâm An-->
-                                <!-- THÀNH: SỬA Bình luận -->
-                                <form action="" method="post">
-                                    {%csrf_token%}
-                                    {{c_form.as_p}}
-                                    <input type="hidden" name="post_id" value="{{post.id}}">
-                                    <button type="submit" name="submit_c_form" class="btn btn-primary">Comment</button>
-                                </form>
+                            <!-- Feed Action Aria -->
+                            <div class="action-button">
+                                <div class="interaction-button">
 
-                                <!-- Like + cmt: Thành -->
-                                <!-- <span><i class="fa fa-heart"></i></span> -->
-                                <!-- <span><i class="fa fa-comment-dots"></i></span> -->
+                                    <!-- nút like: Tâm An-->
+                                    <form action="{% url 'posts:like_post_view' %}" method="POST" class="like-form"
+                                        id="{{post.id}}">
+                                        {%csrf_token%}
+                                        <input type="hidden" name="post_id" value="{{post.id}}">
+                                        <!-- Nếu người dùng chưa có trong danh sách like bài viết -->
+                                        <button type="submit" class="like-btn{{post.id}}">
+                                            <span>
+                                                {%if profile not in post.liked.all%}
+                                                <i class="fa fa-heart"></i>
+                                                {%else%}
+                                                <span><i class="fa fa-heart liked"></i></span>
+                                                {%endif%}
+                                            </span>
+                                        </button>
+
+
+                                    </form>
+                                    <!-- nút cmt: Tâm An-->
+                                    <!-- Tạo cmt -->
+                                    <form action="" method="post">
+                                        {% csrf_token %}
+                                        {{ c_form.as_p }}
+                                        <input type="hidden" name="post_id" value="{{ post.id }}">
+                                        <button type="submit" name="submit_c_form"
+                                            class="btn btn-primary">Comment</button>
+                                    </form>
+                                    <!-- Like + cmt: Thành -->
+                                    <!-- <span><i class="fa fa-heart"></i></span> -->
+                                    <!-- <span><i class="fa fa-comment-dots"></i></span> -->
+                                </div>
                             </div>
-                        </div>
-                        <!-- Thành -->
-                        <!-- <textarea placeholder="Bình luận..." class="command" rows="1"></textarea> -->
-                        <!-- Like By: Tâm An -->
-                        <div class="liked-by">
-                            <!-- Chưa thằng nào like -->
-                            {% if post.num_likes == 0 %}
-                            
-                            <!-- 1 thằng like -->
-                            {% elif post.num_likes == 1 %}
+                            <!-- Thành -->
+                            <!-- <textarea placeholder="Bình luận..." class="command" rows="1"></textarea> -->
+                            <!-- Like By: Tâm An -->
+                            <div class="liked-by">
+                                <!-- Chưa thằng nào like -->
+                                {% if post.num_likes == 0 %}
 
-                            <span><img src="{{post.get_likes.first.avatar.url}}"
-                                    alt="{{post.get_likes.first.avatar.url}}"></span>
-                            <p><b>{{post.get_likes.first.first_name}} {{post.get_likes.first.last_name}}</b></p>
-                            <!-- Nhiều thằng like -->
-                            {% else%}
+                                <!-- 1 thằng like -->
+                                {% elif post.num_likes == 1 %}
 
-                            <span><img src="{{post.get_likes.first.avatar.url}}"
-                                    alt="{{post.get_likes.first.avatar.url}}"></span>
-                            {% for like in post.get_likes %}
-                            {% if forloop.counter == 2 %}
-                            <!-- Lấy phần tử thứ 2 -->
-                            <span><img src="{{like.avatar.url}}" alt="{%static 'images/user1.jpeg'%}"></span>
-                            {% endif %}
-                            {% endfor %}
+                                <span><img src="{{post.get_likes.first.avatar.url}}"
+                                        alt="{{post.get_likes.first.avatar.url}}"></span>
+                                <p><b>{{post.get_likes.first.first_name}} {{post.get_likes.first.last_name}}</b></p>
+                                <!-- Nhiều thằng like -->
+                                {% else%}
 
-                            <p><b>{{post.get_likes.first.first_name}} {{post.get_likes.first.last_name}}</b>
-                                and <b>{{ post.num_likes|add:"-1" }}
-                                    comments other</b></p>
-                            {% endif %}
+                                <span><img src="{{post.get_likes.first.avatar.url}}"
+                                        alt="{{post.get_likes.first.avatar.url}}"></span>
+                                {% for like in post.get_likes %}
+                                {% if forloop.counter == 2 %}
+                                <!-- Lấy phần tử thứ 2 -->
+                                <span><img src="{{like.avatar.url}}" alt="{%static 'images/user1.jpeg'%}"></span>
+                                {% endif %}
+                                {% endfor %}
 
-                        </div>
-                        <!-- Caption: Thành -->
-                        <!-- THÀNH: sửa css bo tròn bg, br, màu nền -->
-                        {%for cmt in post.comment_set.all%}
-                        <div class="caption" style="background-color: antiquewhite;">
-                            <!-- <div class="title">Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+                                <p><b>{{post.get_likes.first.first_name}} {{post.get_likes.first.last_name}}</b>
+                                    and <b>{{ post.num_likes|add:"-1" }}
+                                        comments other</b></p>
+                                {% endif %}
+
+                            </div>
+                            <!-- Caption: Thành -->
+                            <!-- THÀNH: sửa css bo tròn bg, br, màu nền -->
+                            {%for cmt in post.comment_set.all%}
+                            <div class="caption caption{{cmt.id}}"
+                                style="background-color: antiquewhite; margin-bottom: 10px;">
+                                <!-- <div class="title">Lorem ipsum dolor sit, amet consectetur adipisicing elit.
                                 Qui recusandae impedit aliquam non, velit alias maxime tenetur fuga et numquam.</div> -->
-                            <!-- <h1>{{cmt.body}}</h1> -->
-                            <p></p><b>{{cmt.user.first_name}} {{cmt.user.last_name}}</b>
-                            <br>
-                            {{cmt.body}}
-                            <!-- <span class="hars-tag">#lifestyle</span>  -->
-                            </p>
-                        </div>
-                        {%endfor%}
+                                <p>
+                                    <b>{{cmt.user.first_name}} {{cmt.user.last_name}}</b>
+                                    <br>
+                                    {{cmt.body}}
+                                </p>
+                                {% if cmt.user.username.id == request.user.id %}
+                                <div class="edit-comment">
+                                    <img src="{%static 'images/svg/three-dots.svg'%}"
+                                        alt="{%static 'images/svg/three-dots.svg'%}">
+                                    <ul class="edit-item" style="z-index: 1;">
+                                        <li class="icon_edit_comment  icon_edit_comment{{cmt.id}}"><i
+                                                class="fa fa-pen"></i> Edit</li>
+                                        <li id="icon_delete_comment{{cmt.id}}"><i class="fa fa-trash"></i> Delete</li>
+                                    </ul>
+                                </div>
+                                {%endif%}
+                                <div class="page">
 
-                        <!-- Comments: Thành -->
-                        <!-- <div class="comments text-gry">
+
+                                    <!-- modal delete cmt -->
+                                    <div class="popup delete_cmt{{cmt.id}}">
+                                        <div>
+                                            <div class="popup-box delete_cmt-popup-box">
+                                                <h1>Bạn có muốn xóa bình luận không?</h1>
+
+                                                <form action="" method="post">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="cmt_del_id" value="{{cmt.id}}">
+                                                    <button type="submit" class="btnXoa">Delete</button>
+                                                </form>
+                                            </div>
+                                            <span class="close close_{{cmt.id}}"><i class="fa fa-close"></i></span>
+                                        </div>
+                                    </div>
+                                    <!-- ja modal delete cmt -->
+                                    <script>
+                                        document.querySelector('#icon_delete_comment{{cmt.id}}').addEventListener('click', () => {
+                                            document.querySelector('.delete_cmt{{cmt.id}}').style.display = 'flex'
+                                        });
+
+                                        document.querySelectorAll('.close_{{cmt.id}}').forEach(AllCloser => {
+                                            AllCloser.addEventListener('click', () => {
+
+
+                                                document.querySelector('.delete_cmt{{cmt.id}}').style.display = 'none'
+                                                document.querySelector('.edit_cmt{{cmt.id}}').style.display = 'none'
+
+                                            })
+                                        });
+                                    </script>
+
+                                    
+                                </div>
+                            </div>
+                            <!-- Sau khi nhấn edit > hiển thị đoạn này lên -->
+                            <b class="auther_comment auther_comment{{cmt.id}}">{{cmt.user.first_name}}
+                                {{cmt.user.last_name}}</b>
+                            <!-- sửa cmt -->
+                            <form action="" method="post">
+                                {%csrf_token%}
+                                <div class="edit-input-comment">
+
+
+                                    <input name="body" required id="id_body"
+                                        class="input-edit-comment input-edit-comment{{cmt.id}}" type="text"
+                                        placeholder="Edit comment" value="{{cmt.body}}">
+
+
+                                    <button type="submit" style="font-weight: bold; display: none;"
+                                        class="btn-send btn-send{{cmt.id}}"><i
+                                            class="fa-regular fa-paper-plane"></i></button>
+                                </div>
+                                <input type="hidden" name="edit_cmt_id" value="{{cmt.id}}">
+                            </form>
+
+
+
+
+                            <!-- js edit cmt -->
+                            <script>
+                                document.querySelectorAll('.icon_edit_comment{{cmt.id}}').forEach((iconEditComment, index) => {
+                                    iconEditComment.addEventListener('click', () => {
+                                        const caption = document.querySelectorAll('.caption{{cmt.id}}')[index];
+                                        const autherComment = document.querySelectorAll('.auther_comment{{cmt.id}}')[index];
+                                        const inputEditComment = document.querySelectorAll('.input-edit-comment{{cmt.id}}')[index];
+                                        const btnSend = document.querySelectorAll('.btn-send{{cmt.id}}')[index];
+                                        caption.style.display = 'none'; autherComment.style.display = 'flex';
+                                        inputEditComment.style.display = 'flex';
+                                        btnSend.style.display = 'block';
+                                    });
+                                });
+                            </script>
+                            {%endfor%}
+
+                            <!-- Comments: Thành -->
+                            <!-- <div class="comments text-gry">
                             View all comments
                         </div> -->
 
+                        </div>
+
+                        {%endfor%}
+
+
                     </div>
+                    <!--=================Post Input End=================-->
+                </div>
+
+                <!--=================Main Middle End=================-->
+
+
+                <!--=================Main Right Start=================-->
+
+                <!--=================Main Right End=================-->
+
+            </div>
+            <div class="main-right">
+                <!------------Start Message------------>
+
+                <div class="messages">
+                    <!------------------Message Top-------------------->
+                    <div class="message-top">
+                        <h4>Message</h4> <i class="fa fa-edit"></i>
+                    </div>
+                    <!-- Search Bar -->
+                    <div class="message-search-bar">
+                        <i class="fa fa-search"></i>
+                        <input type="search" placeholder="Search message..." id="message-search">
+                    </div>
+                    <!------------------Message Categories-------------------->
+                    <div class="message-categories">
+                        <h6 class="active">Primary</h6>
+                        <h6>General</h6>
+                        <h6 class="message-request">Request(2)</h6>
+                    </div>
+                    <!------------Messag------------>
+                    <div class="message">
+                        <div class="profile-picture">
+                            <img src="images/user1.jpeg" alt="">
+                            <div class="green-active"></div>
+                        </div>
+                        <div class="message-body">
+                            <h5>Alexa Lisa</h5>
+                            <p class="text-gry">
+                                Lorem ipsum dolor sit amet.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="message">
+                        <div class="profile-picture">
+                            <img src="images/user1.jpeg" alt="">
+                            <div class="green-active"></div>
+                        </div>
+                        <div class="message-body">
+                            <h5>Alexa Lisa</h5>
+                            <p class="text-gry">
+                                Lorem ipsum dolor sit amet.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="message">
+                        <div class="profile-picture">
+                            <img src="images/user1.jpeg" alt="">
+                            <div class="green-active"></div>
+                        </div>
+                        <div class="message-body">
+                            <h5>Alexa Lisa</h5>
+                            <p class="text-gry">
+                                Lorem ipsum dolor sit amet.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="message">
+                        <div class="profile-picture">
+                            <img src="images/user1.jpeg" alt="">
+                            <div class="green-active"></div>
+                        </div>
+                        <div class="message-body">
+                            <h5>Alexa Lisa</h5>
+                            <p class="text-gry">
+                                Lorem ipsum dolor sit amet.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <!------------End Message------------>
+                <!------------Start Firend Request------------>
+                <div class="firend-rquest">
+
+                    <a href="{%url 'profiles:my_invites_view'%}"><h4>Request</h4></a>
+                    
+                    {%for i in friend_requests%}
+                    {%if i.sender != profile%}
+                    <div class="request">
+
+                        <div class="info">
+                            <div class="profile-picture">
+                                <img src="{{i.sender.avatar.url}}" alt="{{i.sender.avatar.url}}">
+                            </div>
+                            <div>
+                                <h5>{{i.sender.first_name}} {{i.sender.last_name}}</h5>
+                                <p class="text-gry">
+                                    {{i.get_time_elapsed}}
+                                </p>
+                                <small class="text-gry alert">You have accept fridend request</small>
+                            </div>
+                        </div>
+
+
+                        <div class="action">
+                            <!-- <form action="" method="post">
+                                {%csrf_token%}
+
+                                <input type="hidden" name="relationship_id" value="{{ i.id }}">
+                                <button type="submit" name="btn_relationship" value="Accept" class="btn btn-primary"
+                                    id="Accept">
+                                    Accept
+                                </button>
+                                <button type="submit" name="btn_relationship" value="Delete" class="btn btn-danger"
+                                    id="Delete">
+                                    Delete
+                                </button> -->
+
+
+                                
+                                <div class="btn btn-primary">
+                                    <a href="/profiles/{{i.sender.slug}}">View Profile</a>
+                                    
+                                </div>
+                            
+                                <!-- <button value="Accept" name="btn_relationship" type="submit">
+                                <div class="btn btn-primary" id="Accept">
+                                    <a href="/profiles/{{i.sender.slug}}">{{ friend.username }}</a>
+                                    View Profile
+                                </div>
+                            </button> -->
+                            <!-- <button value="Delete" name="btn_relationship" type="submit">
+                                <div class="btn btn-danger" id="Delete">
+                                    Delete
+                                </div>
+                            </button> -->
+                            <!-- </form> -->
+                        </div>
+                    </div>
+                    {%endif%}
                     {%endfor%}
-
-
                 </div>
-                <!--=================Post Input End=================-->
+                <!------------End Firend Request------------>
+
             </div>
         </div>
-        <!--=================Main Middle End=================-->
-
-
-        <!--=================Main Right Start=================-->
-        <div class="main-right">
-            <!------------Start Message------------>
-
-            <div class="messages">
-                <!------------------Message Top-------------------->
-                <div class="message-top">
-                    <h4>Message</h4> <i class="fa fa-edit"></i>
-                </div>
-                <!-- Search Bar -->
-                <div class="message-search-bar">
-                    <i class="fa fa-search"></i>
-                    <input type="search" placeholder="Search message..." id="message-search">
-                </div>
-                <!------------------Message Categories-------------------->
-                <div class="message-categories">
-                    <h6 class="active">Primary</h6>
-                    <h6>General</h6>
-                    <h6 class="message-request">Request(2)</h6>
-                </div>
-                <!------------Messag------------>
-                <div class="message">
-                    <div class="profile-picture">
-                        <img src="images/user1.jpeg" alt="">
-                        <div class="green-active"></div>
-                    </div>
-                    <div class="message-body">
-                        <h5>Alexa Lisa</h5>
-                        <p class="text-gry">
-                            Lorem ipsum dolor sit amet.
-                        </p>
-                    </div>
-                </div>
-                <div class="message">
-                    <div class="profile-picture">
-                        <img src="images/user1.jpeg" alt="">
-                        <div class="green-active"></div>
-                    </div>
-                    <div class="message-body">
-                        <h5>Alexa Lisa</h5>
-                        <p class="text-gry">
-                            Lorem ipsum dolor sit amet.
-                        </p>
-                    </div>
-                </div>
-                <div class="message">
-                    <div class="profile-picture">
-                        <img src="images/user1.jpeg" alt="">
-                        <div class="green-active"></div>
-                    </div>
-                    <div class="message-body">
-                        <h5>Alexa Lisa</h5>
-                        <p class="text-gry">
-                            Lorem ipsum dolor sit amet.
-                        </p>
-                    </div>
-                </div>
-                <div class="message">
-                    <div class="profile-picture">
-                        <img src="images/user1.jpeg" alt="">
-                        <div class="green-active"></div>
-                    </div>
-                    <div class="message-body">
-                        <h5>Alexa Lisa</h5>
-                        <p class="text-gry">
-                            Lorem ipsum dolor sit amet.
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <!------------End Message------------>
-            <!------------Start Firend Request------------>
-            <div class="firend-rquest">
-                <h4>Request</h4>
-                <div class="request">
-                    <div class="info">
-                        <div class="profile-picture">
-                            <img src="images/user1.jpeg" alt="">
-                        </div>
-                        <div>
-                            <h5>Mark Danele</h5>
-                            <p class="text-gry">
-                                4 mutual firend
-                            </p>
-                            <small class="text-gry alert">You have accept fridend request</small>
-                        </div>
-                    </div>
-                    <div class="action">
-                        <div class="btn btn-primary" id="Accept">
-                            Accept
-                        </div>
-                        <div class="btn btn-danger" id="Delete">
-                            Delete
-                        </div>
-                    </div>
-                </div>
-                <div class="request">
-                    <div class="info">
-                        <div class="profile-picture">
-                            <img src="images/user1.jpeg" alt="">
-                        </div>
-                        <div>
-                            <h5>Mark Danele</h5>
-                            <p class="text-gry">
-                                4 mutual firend
-                            </p>
-                            <small class="text-gry alert">You have accept fridend request</small>
-                        </div>
-                    </div>
-                    <div class="action">
-                        <div class="btn btn-primary" id="Accept">
-                            Accept
-                        </div>
-                        <div class="btn btn-danger" id="Delete">
-                            Delete
-                        </div>
-                    </div>
-                </div>
-                <div class="request">
-                    <div class="info">
-                        <div class="profile-picture">
-                            <img src="images/user1.jpeg" alt="">
-                        </div>
-                        <div>
-                            <h5>Mark Danele</h5>
-                            <p class="text-gry">
-                                4 mutual firend
-                            </p>
-                            <small class="text-gry alert">You have accept fridend request</small>
-                        </div>
-                    </div>
-                    <div class="action">
-                        <div class="btn btn-primary" id="Accept">
-                            Accept
-                        </div>
-                        <div class="btn btn-danger" id="Delete">
-                            Delete
-                        </div>
-                    </div>
-                </div>
-                <div class="request">
-                    <div class="info">
-                        <div class="profile-picture">
-                            <img src="images/user1.jpeg" alt="">
-                        </div>
-                        <div>
-                            <h5>Mark Danele</h5>
-                            <p class="text-gry">
-                                4 mutual firend
-                            </p>
-                            <small class="text-gry alert">You have accept fridend request</small>
-                        </div>
-                    </div>
-                    <div class="action">
-                        <div class="btn btn-primary" id="Accept">
-                            Accept
-                        </div>
-                        <div class="btn btn-danger" id="Delete">
-                            Delete
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!------------End Firend Request------------>
-        </div>
-        <!--=================Main Right End=================-->
-
     </div>
 </main>
 <!------------------End Main Section------------------>
@@ -439,13 +617,14 @@ Trang chủ
 <div class="popup profile-popup">
     <div>
         <div class="popup-box profile-popup-box">
-            <h1>Beg Joker</h1>
-            <p>@thebegjocker</p>
+            <h1>{{profile.username}}</h1>
+            <p>{{profile.bio}}</p>
             <div id="my-profile-picture">
-                <img src="images/user.jpg" alt="">
+                <img src="{{profile.avatar.url}}" alt="{{profile.avatar}}">
             </div>
-            <label for="profile-upload" class="btn btn-primary btn-lg"><a href="profile.html">View Profile</a></label>
-            <button class="btn btn-primary btn-lg"><a href="login.html">Log Out</a></button>
+            <label for="profile-upload" class="btn btn-primary btn-lg"><a href="/profiles/myprofile">View
+                    Profile</a></label>
+            <button class="btn btn-primary btn-lg"><a href="/logout">Log Out</a></button>
         </div>
         <span class="close"><i class="fa fa-close"></i></span>
     </div>
@@ -529,4 +708,62 @@ Trang chủ
 </div>
 <!------------------End Theme Customize Popup------------------>
 <!------------------End PopUps Aria------------------>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js">
+    $(document).ready(function () {
+        let display = false
+        $(".cmt_btn").click(function () {
+            if (display === false) {
+                $(this).next(".comment-box").show("slow");
+                display = true
+            } else {
+                $(this).next(".comment-box").hide("slow");
+                display = false
+            }
+        });
+
+        $('.like-form').submit(function (e) {
+            e.preventDefault()
+
+            const post_id = $(this).attr('id')
+
+            const likeText = $(`.like-btn${post_id}`).text()
+            const trim = $.trim(likeText)
+
+            const url = $(this).attr('action')
+
+            let res;
+            const likes = $(`.like-count${post_id}`).text()
+            const trimCount = parseInt(likes)
+
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: {
+                    'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val(),
+                    'post_id': post_id,
+                },
+                success: function (response) {
+                    if (trim === 'Unlike') {
+                        $(`.like-btn${post_id}`).text('Like')
+                        res = trimCount - 1
+                    } else {
+                        $(`.like-btn${post_id}`).text('Unlike')
+                        res = trimCount + 1
+                    }
+
+                    $(`.like-count${post_id}`).text(res)
+                },
+                error: function (response) {
+                    console.log('error', response)
+                }
+            })
+
+        })
+    });
+</script>
+
+
 {% endblock %}

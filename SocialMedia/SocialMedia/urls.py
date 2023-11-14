@@ -24,6 +24,8 @@ from django.urls import re_path
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.views import LogoutView
 
+
+
 urlpatterns = [
     # trang admin
     path('admin/', admin.site.urls),
@@ -34,11 +36,13 @@ urlpatterns = [
     path('profiles/', include('profiles.urls'), name='profiles'),
     
     # đăng ký
-    path('signup/', views.SignUp.as_view(), name='signup'),
+    path('signup', views.SignUp.as_view(), name='signup'),
+
     # đăng nhập
     path("login", auth_views.LoginView.as_view(template_name="account/login.html"),name='login'),
     # đăng xuất
     path('logout', LogoutView.as_view(), name='logout'),
+
 
     
     

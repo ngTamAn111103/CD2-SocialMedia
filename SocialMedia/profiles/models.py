@@ -3,7 +3,47 @@ from django.db import models
 from django.contrib.auth.models import User
 from .utils import get_random_code
 from django.template.defaultfilters import slugify
+from datetime import datetime
+from django.utils import timezone
+from django.db.models import Q
+
+
 # Create your models here.
+class ProfileManager(models.Manager):
+    # Lấy tất cả profiles mình đã gửi lời mời kết bạn:
+    def get_all_profiles_to_invite(self, me):
+        # Lấy tất cả các profiles (hồ sơ người dùng) trừ profile của người đang thực hiện hàm
+        profiles = Profile.objects.all().exclude(username=me)
+        
+        # Lấy thông tin của profile của người đang thực hiện hàm
+        profile = Profile.objects.get(username=me)
+
+        # Lấy tất cả các mối quan hệ liên quan đến profile của người đang thực hiện hàm
+        qs = Relationship.objects.filter(Q(sender=profile) | Q(receiver=profile))
+
+        # Tạo một danh sách chứa các profiles đã chấp nhận mời kết bạn
+        accepted = []
+        
+        # Duyệt qua tất cả các mối quan hệ
+        for rel in qs:
+            # Nếu mối quan hệ có trạng thái là 'accepted' (đã chấp nhận)
+            if rel.status == 'accepted':
+                # Thêm người nhận và người gửi của mối quan hệ vào danh sách
+                accepted.append(rel.receiver)
+                accepted.append(rel.sender)
+
+        # Tìm các profiles có sẵn để mời kết bạn, bằng cách loại bỏ những người đã chấp nhận mời
+        available = [profile for profile in profiles if profile not in accepted]
+
+        return available
+
+         
+
+    def get_all_profiles(self, me):
+        # Lấy tất cả danh sách hồ sơ <=> loại trừ mình
+        profiles = Profile.objects.all().exclude(username = me)
+        return profiles
+
 class Profile(models.Model):
     first_name = models.CharField(max_length=200, blank=True)
     last_name = models.CharField(max_length=200, blank=True)
@@ -71,7 +111,7 @@ class Profile(models.Model):
     ('Vĩnh Long', 'Vĩnh Long'),
     ('Vĩnh Phúc', 'Vĩnh Phúc'),
 )
-    country = models.CharField(max_length=50, blank=True, choices=CHOICE_COUNTRY)
+    country = models.CharField(max_length=50, blank=False, choices=CHOICE_COUNTRY)
     avatar = models.ImageField(default='avatar_default.jpg', upload_to='avatars/')
     cover = models.ImageField(blank=True, upload_to='covers/')
     friends = models.ManyToManyField(User, blank=True,related_name='friens')
@@ -85,6 +125,8 @@ class Profile(models.Model):
     birthday = models.DateField(blank=True,default='2000-01-01')
     created = models.DateTimeField(auto_now=True)
     updated = models.DateTimeField(auto_now=True)
+
+    objects = ProfileManager()
     # Lấy danh sách bạn bè
     def get_friends(self):
         return self.friends.all()
@@ -119,8 +161,15 @@ class Profile(models.Model):
     
     # Trả về trong admin thông tin 
     def __str__(self) -> str:
-        return f'{self.username} / {self.created.strftime("%d-%m-%Y")}'
+        return f'{self.id} / {self.username}'
     
+    __initial_first_name = None
+    __initial_last_name = None
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.__initial_first_name = self.first_name
+        self.__initial_last_name = self.last_name
+
     # Hàm lưu
     def save(self, *args, **kwargs):
         # Slug cho profile
@@ -133,16 +182,18 @@ class Profile(models.Model):
     # Hàm tạo slug cho profile
     def slug_default(self):
         ex = False
+        to_slug = self.slug
         # Nếu có họ và tên
-        if self.first_name and self.last_name:
-            to_slug = slugify(str(self.first_name)+" "+ str(self.last_name))
-            ex = Profile.objects.filter(slug=to_slug).exists()
-            while ex:
-                to_slug = slugify(to_slug +" "+ str(get_random_code()))
+        if self.first_name != self.__initial_first_name or self.last_name != self.__initial_last_name or self.slug == "":
+            if self.first_name and self.last_name:
+                to_slug = slugify(str(self.first_name)+" "+ str(self.last_name))
                 ex = Profile.objects.filter(slug=to_slug).exists()
-        # Nếu không có họ và tên
-        else:
-            to_slug = str(self.username)
+                while ex:
+                    to_slug = slugify(to_slug +" "+ str(get_random_code()))
+                    ex = Profile.objects.filter(slug=to_slug).exists()
+            # Nếu không có họ và tên
+            else:
+                to_slug = str(self.username)
         self.slug = to_slug
         
     # Khi người dùng thay đổi giới tính && avatar đang ở mặc định
@@ -156,6 +207,13 @@ class Profile(models.Model):
             self.avatar = 'avatar_default.jpg'
             self.save()
 
+class RelationshipManager(models.Manager):
+    def invatations_received(self, receier):
+        # Lấy ra những lời mời kết bạn có người nhận == receier
+        qs = Relationship.objects.filter(receiver=receier,status='send')
+        return qs
+    
+    
 
 class Relationship(models.Model):
     sender = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name="sender")
@@ -167,6 +225,35 @@ class Relationship(models.Model):
     status = models.CharField(max_length=10, choices=STATUS_CHOICES)
     created = models.DateTimeField(auto_now=True)
     updated = models.DateTimeField(auto_now=True)
+
+    objects = RelationshipManager() 
     
     def __str__(self) -> str:
         return f"{self.sender} - {self.receiver} - {self.status}"
+        # lấy thời gian gửi lời mời
+    def get_time_elapsed(Relationship):
+        current_time = datetime.now(timezone.utc)
+        post_created_time = Relationship.created
+        time_difference = current_time - post_created_time
+
+        if time_difference.days > 0:
+            if time_difference.days == 1:
+                time_elapsed_string = f"{time_difference.days} ngày trước"
+            else:
+                time_elapsed_string = f"{time_difference.days} ngày trước"
+        elif time_difference.seconds > 3600:
+            time_difference_hours = time_difference.seconds // 3600
+            if time_difference_hours == 1:
+                time_elapsed_string = f"{time_difference_hours} giờ trước"
+            else:
+                time_elapsed_string = f"{time_difference_hours} giờ trước"
+        elif time_difference.seconds > 60:
+            time_difference_minutes = time_difference.seconds // 60
+            if time_difference_minutes == 1:
+                time_elapsed_string = f"{time_difference_minutes} phút trước"
+            else:
+                time_elapsed_string = f"{time_difference_minutes} phút trước"
+        else:
+            time_elapsed_string = f"{time_difference.seconds} giây trước"
+
+        return time_elapsed_string

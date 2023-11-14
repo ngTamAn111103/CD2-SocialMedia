@@ -14,6 +14,8 @@ document.querySelectorAll('.close').forEach(AllCloser => {
         document.querySelector('.profile-popup').style.display = 'none'
         document.querySelector('.add-post-popup').style.display = 'none'
         document.querySelector('.theme-customize').style.display = 'none'
+
+
     })
 });
 // document.querySelector('#profile-upload').addEventListener('change', () => {
@@ -22,9 +24,9 @@ document.querySelectorAll('.close').forEach(AllCloser => {
 //         console.log(AllMyProfileImg);
 //     })
 // });
-document.querySelector('#create-lg').addEventListener('click', () => {
-    document.querySelector('.add-post-popup').style.display = 'flex'
-});
+// document.querySelector('#create-lg').addEventListener('click', () => {
+//     document.querySelector('.add-post-popup').style.display = 'flex'
+// });
             // document.querySelector('#feed-pic-upload').addEventListener('change', () => {
             //     document.querySelector('#postIMg').src = URL.createObjectURL(document.querySelector('#feed-pic-upload').files[0])
             // });

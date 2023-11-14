@@ -5,9 +5,12 @@ from . import views
 from django.contrib.auth.models import User
 
 
-app_name = 'post'
+
+
+app_name = 'posts'
 
 urlpatterns =[
     path('', views.post_comment_create_listview, name='main_post_view'),
     path('liked/', views.like_unlike_post, name='like_post_view'),
+
 ]

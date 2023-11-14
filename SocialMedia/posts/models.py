@@ -5,25 +5,35 @@ from django.core.validators import FileExtensionValidator
 from profiles.models import Profile
 from django.utils import timezone
 from datetime import datetime
-
+import os
 
 # Create your models here.
 class Post (models.Model):
     content = models.TextField(blank=False,default='')
-    image = models.ImageField(upload_to='post', blank=True)
+    image = models.FileField(upload_to='post', blank=True, validators=[FileExtensionValidator( ['jpg','jpeg', 'mp4', 'mov','png'] )])
     liked = models.ManyToManyField(Profile, blank=True, related_name='likes')
     commented = models.ManyToManyField(Profile, blank=True, related_name='comments')
     updated = models.DateTimeField(auto_now=True)
     created = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(Profile, on_delete=models.CASCADE,related_name='posts')
-    
+    STATUS_CHOICES = (
+    # Chưa nhấn -> hiển thị thích
+    ("Public", "Công khai"),
+    # Đã nhấn -> chuyển sang ko thích nữa
+    ("Friend", "Bạn bè"),
+)
+    visibility = models.CharField(max_length=20, choices=(STATUS_CHOICES), default='Public', blank=False)
     def __str__(self) -> str:
         return str(self.content[:50])
     
     def num_likes(self):
         return self.liked.all().count()
         # return self.liked.filter().all().count()
-    
+        
+    def get_image_extension(self):
+        if self.image:
+            return os.path.splitext(self.image.name)[1]
+        return None
     def get_comments(self):
         return self.commented.all()
     def get_likes(self):
@@ -72,7 +82,9 @@ class Comment (models.Model):
     created = models.DateTimeField(auto_now_add=True)
     
     def __str__(self) -> str:
-        return str(str(self.user) +" - "+str( self.post.content))
+        return str(str(self.user) +" - "+str( self.post.content) +' - '+ str(self.body))
+    class Meta:
+        ordering = ('-created',)
     
 LIKE_CHOICES = (
     # Chưa nhấn -> hiển thị thích

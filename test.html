@@ -1,0 +1,1277 @@
+<main>
+    <div class="container main-container">
+        <div class="main-left">
+            <!-- <h1>test</h1>
+             -->
+            <!------------------Profile Start------------------>
+            <a class="profile">
+                <div class="profile-picture" id="my-profile-picture">
+                    <img src="/media/avatars/IMG_2849_gyDHbo2.JPG" alt="/media/avatars/IMG_2849_gyDHbo2.JPG">
+                </div>
+                <div class="profile-handle">
+                    <h4>admin</h4>
+                    <p class="text-gry">
+                        Chưa có tiểu sử...
+                    </p>
+                </div>
+            </a>
+            <!------------------Profile End------------------>
+
+            <!------------------Start Aside Bar------------------>
+            <aside>
+                <a class="menu-item active">
+                    <span><img src="/static/images/svg/home.svg" alt=""></span>
+                    <h3>Home</h3>
+                </a>
+
+                <a class="menu-item" id="Notify-box">
+                    <span><img src="/static/images/svg/bell.svg" alt=""></span>
+                    <small class="notfy-counter" id="ntCounter1">5+</small>
+                    <h3>Notification</h3>
+                    <!------------------Notification Box Start------------------>
+                    <div class="notification-box">
+                        <div>
+                            <div class="profile-picture">
+                                <img src="images/user.jpg" alt="">
+                            </div>
+                            <div class="notifition-body">
+                                <b>Maria</b> accepted your friend request
+                                <small class="text-gry">1 DAYS AGO</small>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="profile-picture">
+                                <img src="images/user.jpg" alt="">
+                            </div>
+                            <div class="notifition-body">
+                                <b>Jhon Evan</b> commented on your post
+                                <small class="text-gry">2 HOUR AGO</small>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="profile-picture">
+                                <img src="images/user.jpg" alt="">
+                            </div>
+                            <div class="notifition-body">
+                                <b>Emaliy Benjamin</b> like your on post
+                                <small class="text-gry">JUST NOW</small>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="profile-picture">
+                                <img src="images/user.jpg" alt="">
+                            </div>
+                            <div class="notifition-body">
+                                <b>Mark Trump</b> and <b>10 other</b> like on your post
+                                <small class="text-gry">TODAYS</small>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="profile-picture">
+                                <img src="images/user.jpg" alt="">
+                            </div>
+                            <div class="notifition-body">
+                                <b>Evrahim Alli</b> and <b>5 other</b> commented on your post
+                                <small class="text-gry">3 DAYS AGO</small>
+                            </div>
+                        </div>
+                    </div>
+                    <!------------------Notification Box End------------------>
+                </a>
+
+                <a class="menu-item" id="messageMenu">
+                    <span><img src="/static/images/svg/messages.svg" alt="/static/images/svg/bell.svg"></span>
+                    <small class="notfy-counter" id="notifyCoutner2">3</small>
+                    <h3>Message</h3>
+                </a>
+
+                <a class="menu-item" id="theme">
+                    <span><img src="/static/images/svg/palette.svg" alt=""></span>
+                    <h3>Theme</h3>
+                </a>
+
+                <!------------------Add Post Btn------------------>
+
+
+            </aside>
+            <label for="add-post" class="btn btn-primary btn-lg">Create Group</label>
+            <!------------------End Aside Bar------------------>
+        </div>
+        <div class="main-middle">
+            <div class="middle-container">
+                <!--=================Post Input Start=================-->
+                <!-- Đăng bài: Tâm An -->
+                <!-- THÀNH: SỬA POST BÀI CSS -->
+
+                <form class="add-post input-post" action="" method="POST" enctype="multipart/form-data">
+                    <div class="form-content">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="AxHj2ejUymszfmzDVsnwcH8PAnFFnhe9yIBPi96S4IztIqfpYeViXtBmSayycL3Y">
+                        <p><label for="id_content">Content:</label> <textarea name="content" cols="40" rows="10" class="content-post" placeholder="Bạn đang nghĩ gì?" required id="id_content">
+</textarea></p>
+<p><label for="id_image">Image:</label> <input type="file" name="image" class="image-post" id="id_image"></p>
+<p><label for="id_visibility">Visibility:</label> <select name="visibility" class="visibility" id="id_visibility">
+  <option value="Public" selected>Công khai</option>
+
+  <option value="Friend">Bạn bè</option>
+
+</select></p>
+
+                        <!-- Của Thành -->
+                        <!-- <div class="profile-picture" id="my-profile-picture">
+                        <img src="/media/avatars/IMG_2849_gyDHbo2.JPG" alt="">
+                    </div>
+                    <input type="text" placeholder="What's on your mind?" id="add-post"> -->
+
+                        <!-- <label for="add-post" class="btn btn-primary" id="create-lg">Post</label>  -->
+
+                        <button type="submit" name="submit_p_form" class="btn btn-primary btn-post">Post</button>
+                    </div>
+                </form>
+
+                <div class="feeds">
+                    <!-- Bài đăng cá nhân -->
+
+
+                    <!-- Danh sách bài post -->
+                    
+                    <div class="page">
+                        <!-- Modal delete post -->
+                        <div class="popup delete_post185">
+                            <div>
+                                <div class="popup-box delete_post-popup-box">
+                                    <h1>Bạn có muốn xóa bài viết không?</h1>
+                                    <!-----------------Font Size----------------->
+
+                                    <!----------------Primary Colors---------------->
+
+                                    <!----------------Background Colors---------------->
+                                    <form action="" method="post">
+                                        <input type="hidden" name="csrfmiddlewaretoken" value="AxHj2ejUymszfmzDVsnwcH8PAnFFnhe9yIBPi96S4IztIqfpYeViXtBmSayycL3Y">
+                                        <input type="hidden" name="post_del_id" value="185">
+                                        <button type="submit" class="btnXoa">Delete</button>
+                                    </form>
+                                </div>
+                                <span class="close close_185"><i class="fa fa-close"></i></span>
+                            </div>
+                        </div>
+                        <!-- Model edit post -->
+                        <div class="popup edit_post185">
+                            <div>
+                                <div class="popup-box edit_post-popup-box">
+                                    <h1>Edit post</h1>
+
+                                    <form action="" enctype="multipart/form-data" method="post">
+                                        <input type="hidden" name="csrfmiddlewaretoken" value="AxHj2ejUymszfmzDVsnwcH8PAnFFnhe9yIBPi96S4IztIqfpYeViXtBmSayycL3Y">
+                                        <p><label for="id_content">Content:</label> <textarea name="content" cols="40"
+                                                rows="10" required="" id="id_content">ca</textarea></p>
+                                        <p><label for="id_image">Image:</label>
+                                            <input type="file" name="image" id="id_image">
+                                        </p>
+                                        <p>
+                                            <label for="id_visibility">Visibility:</label>
+                                            <select name="visibility" id="id_visibility">
+                                                
+                                                <option value="Public">Công khai</option>
+                                                <option value="Friend" selected="">Bạn bè</option>
+                                                
+
+                                            </select>
+                                        </p>
+                                        <input type="hidden" name="post_edit_id" value="185">
+                                        <button type="submit" class="btnSua">Update</button>
+                                    </form>
+                                </div>
+                                <span class="close close_185"><i class="fa fa-close"></i></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    
+                    <div class="feed myfeed">
+
+
+                        
+                            <!-- Feed Top -->
+                            <div class="feed-top">
+                                <div class="user">
+                                    <div class="profile-picture">
+                                        <img src="/media/avatars/IMG_2849_gyDHbo2.JPG" alt="/media/avatars/IMG_2849_gyDHbo2.JPG">
+                                    </div>
+                                    <div class="info">
+                                        <h3>Nguyễn An</h3>
+                                        <div class="time text-gry">
+
+                                            <small>Hồ Chí Minh,
+                                                <span>0 giây trước</span>
+                                                
+                                                <img src="/static/images/friend_post.png"
+                                                    alt="/static/images/friend_post.png"
+                                                    style="width: 15px; display: inline-block">
+                                                
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="edit">
+                                    <img src="/static/images/svg/three-dots.svg"
+                                        alt="/static/images/svg/three-dots.svg">
+                                    <ul class="edit-menu">
+                                        <li id="icon_edit185"><i class="fa fa-pen"></i>Edit</li>
+                                        <li id="icon_delete185"><i class="fa fa-trash"></i>Delete</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <script>
+                                document.querySelector('#icon_delete185').addEventListener('click', () => {
+                                    document.querySelector('.delete_post185').style.display = 'flex'
+                                });
+                                document.querySelector('#icon_edit185').addEventListener('click', () => {
+                                    document.querySelector('.edit_post185').style.display = 'flex'
+
+                                });
+                                document.querySelectorAll('.close_185').forEach(AllCloser => {
+                                    AllCloser.addEventListener('click', () => {
+
+
+                                        document.querySelector('.delete_post185').style.display = 'none'
+                                        document.querySelector('.edit_post185').style.display = 'none'
+
+                                    })
+                                });
+                            </script>
+                            <!-- Nội dung -->
+                            <p>ca</p>
+
+
+                            <!-- Feed Img 
+                        Kiểm tra hình ảnh có tồn tại-->
+                            
+
+                            <!-- Kiểm tra đuôi file  là video-->
+                            
+                            <div class="feed-img">
+                                <img src="/media/post/IMG_2849.JPG" alt="/media/post/IMG_2849.JPG">
+                            </div>
+
+                            
+                            
+
+
+                            <!-- Feed Action Aria -->
+                            <div class="action-button">
+                                <div class="interaction-button">
+
+                                    <!-- nút like: Tâm An-->
+                                    <form action="/liked/" method="POST" class="like-form"
+                                        id="185">
+                                        <input type="hidden" name="csrfmiddlewaretoken" value="AxHj2ejUymszfmzDVsnwcH8PAnFFnhe9yIBPi96S4IztIqfpYeViXtBmSayycL3Y">
+                                        <input type="hidden" name="post_id" value="185">
+                                        <!-- Nếu người dùng chưa có trong danh sách like bài viết -->
+                                        <button type="submit" class="like-btn185">
+                                            <span>
+                                                
+                                                <i class="fa fa-heart"></i>
+                                                
+                                            </span>
+                                        </button>
+
+
+                                    </form>
+                                    <!-- nút cmt: Tâm An-->
+                                    <!-- Tạo cmt -->
+                                    <form action="" method="post">
+                                        <input type="hidden" name="csrfmiddlewaretoken" value="AxHj2ejUymszfmzDVsnwcH8PAnFFnhe9yIBPi96S4IztIqfpYeViXtBmSayycL3Y">
+                                        <p><label for="id_body">Bình luận:</label> <input type="text" name="body" placeholder="Bình luận bài viết" required id="id_body"></p>
+                                        <input type="hidden" name="post_id" value="185">
+                                        <button type="submit" name="submit_c_form"
+                                            class="btn btn-primary">Comment</button>
+                                    </form>
+                                    <!-- Like + cmt: Thành -->
+                                    <!-- <span><i class="fa fa-heart"></i></span> -->
+                                    <!-- <span><i class="fa fa-comment-dots"></i></span> -->
+                                </div>
+                            </div>
+                            <!-- Thành -->
+                            <!-- <textarea placeholder="Bình luận..." class="command" rows="1"></textarea> -->
+                            <!-- Like By: Tâm An -->
+                            <div class="liked-by">
+                                <!-- Chưa thằng nào like -->
+                                
+
+                                <!-- 1 thằng like -->
+                                
+
+                            </div>
+                            <!-- Caption: Thành -->
+                            <!-- THÀNH: sửa css bo tròn bg, br, màu nền -->
+                            
+
+                            <!-- Comments: Thành -->
+                            <!-- <div class="comments text-gry">
+                            View all comments
+                        </div> -->
+
+                        </div>
+
+                        
+                    <div class="page">
+                        <!-- Modal delete post -->
+                        <div class="popup delete_post184">
+                            <div>
+                                <div class="popup-box delete_post-popup-box">
+                                    <h1>Bạn có muốn xóa bài viết không?</h1>
+                                    <!-----------------Font Size----------------->
+
+                                    <!----------------Primary Colors---------------->
+
+                                    <!----------------Background Colors---------------->
+                                    <form action="" method="post">
+                                        <input type="hidden" name="csrfmiddlewaretoken" value="AxHj2ejUymszfmzDVsnwcH8PAnFFnhe9yIBPi96S4IztIqfpYeViXtBmSayycL3Y">
+                                        <input type="hidden" name="post_del_id" value="184">
+                                        <button type="submit" class="btnXoa">Delete</button>
+                                    </form>
+                                </div>
+                                <span class="close close_184"><i class="fa fa-close"></i></span>
+                            </div>
+                        </div>
+                        <!-- Model edit post -->
+                        <div class="popup edit_post184">
+                            <div>
+                                <div class="popup-box edit_post-popup-box">
+                                    <h1>Edit post</h1>
+
+                                    <form action="" enctype="multipart/form-data" method="post">
+                                        <input type="hidden" name="csrfmiddlewaretoken" value="AxHj2ejUymszfmzDVsnwcH8PAnFFnhe9yIBPi96S4IztIqfpYeViXtBmSayycL3Y">
+                                        <p><label for="id_content">Content:</label> <textarea name="content" cols="40"
+                                                rows="10" required="" id="id_content">aasd</textarea></p>
+                                        <p><label for="id_image">Image:</label>
+                                            <input type="file" name="image" id="id_image">
+                                        </p>
+                                        <p>
+                                            <label for="id_visibility">Visibility:</label>
+                                            <select name="visibility" id="id_visibility">
+                                                
+                                                <option value="Public">Công khai</option>
+                                                <option value="Friend" selected="">Bạn bè</option>
+                                                
+
+                                            </select>
+                                        </p>
+                                        <input type="hidden" name="post_edit_id" value="184">
+                                        <button type="submit" class="btnSua">Update</button>
+                                    </form>
+                                </div>
+                                <span class="close close_184"><i class="fa fa-close"></i></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    
+                    <div class="feed myfeed">
+
+
+                        
+                            <!-- Feed Top -->
+                            <div class="feed-top">
+                                <div class="user">
+                                    <div class="profile-picture">
+                                        <img src="/media/avatars/IMG_2849_gyDHbo2.JPG" alt="/media/avatars/IMG_2849_gyDHbo2.JPG">
+                                    </div>
+                                    <div class="info">
+                                        <h3>Nguyễn An</h3>
+                                        <div class="time text-gry">
+
+                                            <small>Hồ Chí Minh,
+                                                <span>5 giây trước</span>
+                                                
+                                                <img src="/static/images/friend_post.png"
+                                                    alt="/static/images/friend_post.png"
+                                                    style="width: 15px; display: inline-block">
+                                                
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="edit">
+                                    <img src="/static/images/svg/three-dots.svg"
+                                        alt="/static/images/svg/three-dots.svg">
+                                    <ul class="edit-menu">
+                                        <li id="icon_edit184"><i class="fa fa-pen"></i>Edit</li>
+                                        <li id="icon_delete184"><i class="fa fa-trash"></i>Delete</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <script>
+                                document.querySelector('#icon_delete184').addEventListener('click', () => {
+                                    document.querySelector('.delete_post184').style.display = 'flex'
+                                });
+                                document.querySelector('#icon_edit184').addEventListener('click', () => {
+                                    document.querySelector('.edit_post184').style.display = 'flex'
+
+                                });
+                                document.querySelectorAll('.close_184').forEach(AllCloser => {
+                                    AllCloser.addEventListener('click', () => {
+
+
+                                        document.querySelector('.delete_post184').style.display = 'none'
+                                        document.querySelector('.edit_post184').style.display = 'none'
+
+                                    })
+                                });
+                            </script>
+                            <!-- Nội dung -->
+                            <p>aasd</p>
+
+
+                            <!-- Feed Img 
+                        Kiểm tra hình ảnh có tồn tại-->
+                            
+
+
+                            <!-- Feed Action Aria -->
+                            <div class="action-button">
+                                <div class="interaction-button">
+
+                                    <!-- nút like: Tâm An-->
+                                    <form action="/liked/" method="POST" class="like-form"
+                                        id="184">
+                                        <input type="hidden" name="csrfmiddlewaretoken" value="AxHj2ejUymszfmzDVsnwcH8PAnFFnhe9yIBPi96S4IztIqfpYeViXtBmSayycL3Y">
+                                        <input type="hidden" name="post_id" value="184">
+                                        <!-- Nếu người dùng chưa có trong danh sách like bài viết -->
+                                        <button type="submit" class="like-btn184">
+                                            <span>
+                                                
+                                                <i class="fa fa-heart"></i>
+                                                
+                                            </span>
+                                        </button>
+
+
+                                    </form>
+                                    <!-- nút cmt: Tâm An-->
+                                    <!-- Tạo cmt -->
+                                    <form action="" method="post">
+                                        <input type="hidden" name="csrfmiddlewaretoken" value="AxHj2ejUymszfmzDVsnwcH8PAnFFnhe9yIBPi96S4IztIqfpYeViXtBmSayycL3Y">
+                                        <p><label for="id_body">Bình luận:</label> <input type="text" name="body" placeholder="Bình luận bài viết" required id="id_body"></p>
+                                        <input type="hidden" name="post_id" value="184">
+                                        <button type="submit" name="submit_c_form"
+                                            class="btn btn-primary">Comment</button>
+                                    </form>
+                                    <!-- Like + cmt: Thành -->
+                                    <!-- <span><i class="fa fa-heart"></i></span> -->
+                                    <!-- <span><i class="fa fa-comment-dots"></i></span> -->
+                                </div>
+                            </div>
+                            <!-- Thành -->
+                            <!-- <textarea placeholder="Bình luận..." class="command" rows="1"></textarea> -->
+                            <!-- Like By: Tâm An -->
+                            <div class="liked-by">
+                                <!-- Chưa thằng nào like -->
+                                
+
+                                <!-- 1 thằng like -->
+                                
+
+                            </div>
+                            <!-- Caption: Thành -->
+                            <!-- THÀNH: sửa css bo tròn bg, br, màu nền -->
+                            
+
+                            <!-- Comments: Thành -->
+                            <!-- <div class="comments text-gry">
+                            View all comments
+                        </div> -->
+
+                        </div>
+
+                        
+                    <div class="page">
+                        <!-- Modal delete post -->
+                        <div class="popup delete_post183">
+                            <div>
+                                <div class="popup-box delete_post-popup-box">
+                                    <h1>Bạn có muốn xóa bài viết không?</h1>
+                                    <!-----------------Font Size----------------->
+
+                                    <!----------------Primary Colors---------------->
+
+                                    <!----------------Background Colors---------------->
+                                    <form action="" method="post">
+                                        <input type="hidden" name="csrfmiddlewaretoken" value="AxHj2ejUymszfmzDVsnwcH8PAnFFnhe9yIBPi96S4IztIqfpYeViXtBmSayycL3Y">
+                                        <input type="hidden" name="post_del_id" value="183">
+                                        <button type="submit" class="btnXoa">Delete</button>
+                                    </form>
+                                </div>
+                                <span class="close close_183"><i class="fa fa-close"></i></span>
+                            </div>
+                        </div>
+                        <!-- Model edit post -->
+                        <div class="popup edit_post183">
+                            <div>
+                                <div class="popup-box edit_post-popup-box">
+                                    <h1>Edit post</h1>
+
+                                    <form action="" enctype="multipart/form-data" method="post">
+                                        <input type="hidden" name="csrfmiddlewaretoken" value="AxHj2ejUymszfmzDVsnwcH8PAnFFnhe9yIBPi96S4IztIqfpYeViXtBmSayycL3Y">
+                                        <p><label for="id_content">Content:</label> <textarea name="content" cols="40"
+                                                rows="10" required="" id="id_content">ád</textarea></p>
+                                        <p><label for="id_image">Image:</label>
+                                            <input type="file" name="image" id="id_image">
+                                        </p>
+                                        <p>
+                                            <label for="id_visibility">Visibility:</label>
+                                            <select name="visibility" id="id_visibility">
+                                                
+                                                <option value="Public" selected="">Công khai</option>
+                                                <option value="Friend">Bạn bè</option>
+                                                
+
+                                            </select>
+                                        </p>
+                                        <input type="hidden" name="post_edit_id" value="183">
+                                        <button type="submit" class="btnSua">Update</button>
+                                    </form>
+                                </div>
+                                <span class="close close_183"><i class="fa fa-close"></i></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    
+                    <div class="feed myfeed">
+
+
+                        
+                            <!-- Feed Top -->
+                            <div class="feed-top">
+                                <div class="user">
+                                    <div class="profile-picture">
+                                        <img src="/media/avatars/IMG_2849_gyDHbo2.JPG" alt="/media/avatars/IMG_2849_gyDHbo2.JPG">
+                                    </div>
+                                    <div class="info">
+                                        <h3>Nguyễn An</h3>
+                                        <div class="time text-gry">
+
+                                            <small>Hồ Chí Minh,
+                                                <span>9 giây trước</span>
+                                                
+                                                <img src="/static/images/public_post.png"
+                                                    alt="/static/images/public_post.png"
+                                                    style="width: 15px; display: inline-block;">
+                                                
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="edit">
+                                    <img src="/static/images/svg/three-dots.svg"
+                                        alt="/static/images/svg/three-dots.svg">
+                                    <ul class="edit-menu">
+                                        <li id="icon_edit183"><i class="fa fa-pen"></i>Edit</li>
+                                        <li id="icon_delete183"><i class="fa fa-trash"></i>Delete</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <script>
+                                document.querySelector('#icon_delete183').addEventListener('click', () => {
+                                    document.querySelector('.delete_post183').style.display = 'flex'
+                                });
+                                document.querySelector('#icon_edit183').addEventListener('click', () => {
+                                    document.querySelector('.edit_post183').style.display = 'flex'
+
+                                });
+                                document.querySelectorAll('.close_183').forEach(AllCloser => {
+                                    AllCloser.addEventListener('click', () => {
+
+
+                                        document.querySelector('.delete_post183').style.display = 'none'
+                                        document.querySelector('.edit_post183').style.display = 'none'
+
+                                    })
+                                });
+                            </script>
+                            <!-- Nội dung -->
+                            <p>ád</p>
+
+
+                            <!-- Feed Img 
+                        Kiểm tra hình ảnh có tồn tại-->
+                            
+
+
+                            <!-- Feed Action Aria -->
+                            <div class="action-button">
+                                <div class="interaction-button">
+
+                                    <!-- nút like: Tâm An-->
+                                    <form action="/liked/" method="POST" class="like-form"
+                                        id="183">
+                                        <input type="hidden" name="csrfmiddlewaretoken" value="AxHj2ejUymszfmzDVsnwcH8PAnFFnhe9yIBPi96S4IztIqfpYeViXtBmSayycL3Y">
+                                        <input type="hidden" name="post_id" value="183">
+                                        <!-- Nếu người dùng chưa có trong danh sách like bài viết -->
+                                        <button type="submit" class="like-btn183">
+                                            <span>
+                                                
+                                                <i class="fa fa-heart"></i>
+                                                
+                                            </span>
+                                        </button>
+
+
+                                    </form>
+                                    <!-- nút cmt: Tâm An-->
+                                    <!-- Tạo cmt -->
+                                    <form action="" method="post">
+                                        <input type="hidden" name="csrfmiddlewaretoken" value="AxHj2ejUymszfmzDVsnwcH8PAnFFnhe9yIBPi96S4IztIqfpYeViXtBmSayycL3Y">
+                                        <p><label for="id_body">Bình luận:</label> <input type="text" name="body" placeholder="Bình luận bài viết" required id="id_body"></p>
+                                        <input type="hidden" name="post_id" value="183">
+                                        <button type="submit" name="submit_c_form"
+                                            class="btn btn-primary">Comment</button>
+                                    </form>
+                                    <!-- Like + cmt: Thành -->
+                                    <!-- <span><i class="fa fa-heart"></i></span> -->
+                                    <!-- <span><i class="fa fa-comment-dots"></i></span> -->
+                                </div>
+                            </div>
+                            <!-- Thành -->
+                            <!-- <textarea placeholder="Bình luận..." class="command" rows="1"></textarea> -->
+                            <!-- Like By: Tâm An -->
+                            <div class="liked-by">
+                                <!-- Chưa thằng nào like -->
+                                
+
+                                <!-- 1 thằng like -->
+                                
+
+                            </div>
+                            <!-- Caption: Thành -->
+                            <!-- THÀNH: sửa css bo tròn bg, br, màu nền -->
+                            
+
+                            <!-- Comments: Thành -->
+                            <!-- <div class="comments text-gry">
+                            View all comments
+                        </div> -->
+
+                        </div>
+
+                        
+                    <div class="page">
+                        <!-- Modal delete post -->
+                        <div class="popup delete_post182">
+                            <div>
+                                <div class="popup-box delete_post-popup-box">
+                                    <h1>Bạn có muốn xóa bài viết không?</h1>
+                                    <!-----------------Font Size----------------->
+
+                                    <!----------------Primary Colors---------------->
+
+                                    <!----------------Background Colors---------------->
+                                    <form action="" method="post">
+                                        <input type="hidden" name="csrfmiddlewaretoken" value="AxHj2ejUymszfmzDVsnwcH8PAnFFnhe9yIBPi96S4IztIqfpYeViXtBmSayycL3Y">
+                                        <input type="hidden" name="post_del_id" value="182">
+                                        <button type="submit" class="btnXoa">Delete</button>
+                                    </form>
+                                </div>
+                                <span class="close close_182"><i class="fa fa-close"></i></span>
+                            </div>
+                        </div>
+                        <!-- Model edit post -->
+                        <div class="popup edit_post182">
+                            <div>
+                                <div class="popup-box edit_post-popup-box">
+                                    <h1>Edit post</h1>
+
+                                    <form action="" enctype="multipart/form-data" method="post">
+                                        <input type="hidden" name="csrfmiddlewaretoken" value="AxHj2ejUymszfmzDVsnwcH8PAnFFnhe9yIBPi96S4IztIqfpYeViXtBmSayycL3Y">
+                                        <p><label for="id_content">Content:</label> <textarea name="content" cols="40"
+                                                rows="10" required="" id="id_content">ád</textarea></p>
+                                        <p><label for="id_image">Image:</label>
+                                            <input type="file" name="image" id="id_image">
+                                        </p>
+                                        <p>
+                                            <label for="id_visibility">Visibility:</label>
+                                            <select name="visibility" id="id_visibility">
+                                                
+                                                <option value="Public" selected="">Công khai</option>
+                                                <option value="Friend">Bạn bè</option>
+                                                
+
+                                            </select>
+                                        </p>
+                                        <input type="hidden" name="post_edit_id" value="182">
+                                        <button type="submit" class="btnSua">Update</button>
+                                    </form>
+                                </div>
+                                <span class="close close_182"><i class="fa fa-close"></i></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    
+                    <div class="feed myfeed">
+
+
+                        
+                            <!-- Feed Top -->
+                            <div class="feed-top">
+                                <div class="user">
+                                    <div class="profile-picture">
+                                        <img src="/media/avatars/IMG_2849_gyDHbo2.JPG" alt="/media/avatars/IMG_2849_gyDHbo2.JPG">
+                                    </div>
+                                    <div class="info">
+                                        <h3>Nguyễn An</h3>
+                                        <div class="time text-gry">
+
+                                            <small>Hồ Chí Minh,
+                                                <span>10 giây trước</span>
+                                                
+                                                <img src="/static/images/public_post.png"
+                                                    alt="/static/images/public_post.png"
+                                                    style="width: 15px; display: inline-block;">
+                                                
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="edit">
+                                    <img src="/static/images/svg/three-dots.svg"
+                                        alt="/static/images/svg/three-dots.svg">
+                                    <ul class="edit-menu">
+                                        <li id="icon_edit182"><i class="fa fa-pen"></i>Edit</li>
+                                        <li id="icon_delete182"><i class="fa fa-trash"></i>Delete</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <script>
+                                document.querySelector('#icon_delete182').addEventListener('click', () => {
+                                    document.querySelector('.delete_post182').style.display = 'flex'
+                                });
+                                document.querySelector('#icon_edit182').addEventListener('click', () => {
+                                    document.querySelector('.edit_post182').style.display = 'flex'
+
+                                });
+                                document.querySelectorAll('.close_182').forEach(AllCloser => {
+                                    AllCloser.addEventListener('click', () => {
+
+
+                                        document.querySelector('.delete_post182').style.display = 'none'
+                                        document.querySelector('.edit_post182').style.display = 'none'
+
+                                    })
+                                });
+                            </script>
+                            <!-- Nội dung -->
+                            <p>ád</p>
+
+
+                            <!-- Feed Img 
+                        Kiểm tra hình ảnh có tồn tại-->
+                            
+
+
+                            <!-- Feed Action Aria -->
+                            <div class="action-button">
+                                <div class="interaction-button">
+
+                                    <!-- nút like: Tâm An-->
+                                    <form action="/liked/" method="POST" class="like-form"
+                                        id="182">
+                                        <input type="hidden" name="csrfmiddlewaretoken" value="AxHj2ejUymszfmzDVsnwcH8PAnFFnhe9yIBPi96S4IztIqfpYeViXtBmSayycL3Y">
+                                        <input type="hidden" name="post_id" value="182">
+                                        <!-- Nếu người dùng chưa có trong danh sách like bài viết -->
+                                        <button type="submit" class="like-btn182">
+                                            <span>
+                                                
+                                                <i class="fa fa-heart"></i>
+                                                
+                                            </span>
+                                        </button>
+
+
+                                    </form>
+                                    <!-- nút cmt: Tâm An-->
+                                    <!-- Tạo cmt -->
+                                    <form action="" method="post">
+                                        <input type="hidden" name="csrfmiddlewaretoken" value="AxHj2ejUymszfmzDVsnwcH8PAnFFnhe9yIBPi96S4IztIqfpYeViXtBmSayycL3Y">
+                                        <p><label for="id_body">Bình luận:</label> <input type="text" name="body" placeholder="Bình luận bài viết" required id="id_body"></p>
+                                        <input type="hidden" name="post_id" value="182">
+                                        <button type="submit" name="submit_c_form"
+                                            class="btn btn-primary">Comment</button>
+                                    </form>
+                                    <!-- Like + cmt: Thành -->
+                                    <!-- <span><i class="fa fa-heart"></i></span> -->
+                                    <!-- <span><i class="fa fa-comment-dots"></i></span> -->
+                                </div>
+                            </div>
+                            <!-- Thành -->
+                            <!-- <textarea placeholder="Bình luận..." class="command" rows="1"></textarea> -->
+                            <!-- Like By: Tâm An -->
+                            <div class="liked-by">
+                                <!-- Chưa thằng nào like -->
+                                
+
+                                <!-- 1 thằng like -->
+                                
+
+                            </div>
+                            <!-- Caption: Thành -->
+                            <!-- THÀNH: sửa css bo tròn bg, br, màu nền -->
+                            
+
+                            <!-- Comments: Thành -->
+                            <!-- <div class="comments text-gry">
+                            View all comments
+                        </div> -->
+
+                        </div>
+
+                        
+                    <div class="page">
+                        <!-- Modal delete post -->
+                        <div class="popup delete_post181">
+                            <div>
+                                <div class="popup-box delete_post-popup-box">
+                                    <h1>Bạn có muốn xóa bài viết không?</h1>
+                                    <!-----------------Font Size----------------->
+
+                                    <!----------------Primary Colors---------------->
+
+                                    <!----------------Background Colors---------------->
+                                    <form action="" method="post">
+                                        <input type="hidden" name="csrfmiddlewaretoken" value="AxHj2ejUymszfmzDVsnwcH8PAnFFnhe9yIBPi96S4IztIqfpYeViXtBmSayycL3Y">
+                                        <input type="hidden" name="post_del_id" value="181">
+                                        <button type="submit" class="btnXoa">Delete</button>
+                                    </form>
+                                </div>
+                                <span class="close close_181"><i class="fa fa-close"></i></span>
+                            </div>
+                        </div>
+                        <!-- Model edit post -->
+                        <div class="popup edit_post181">
+                            <div>
+                                <div class="popup-box edit_post-popup-box">
+                                    <h1>Edit post</h1>
+
+                                    <form action="" enctype="multipart/form-data" method="post">
+                                        <input type="hidden" name="csrfmiddlewaretoken" value="AxHj2ejUymszfmzDVsnwcH8PAnFFnhe9yIBPi96S4IztIqfpYeViXtBmSayycL3Y">
+                                        <p><label for="id_content">Content:</label> <textarea name="content" cols="40"
+                                                rows="10" required="" id="id_content">ád</textarea></p>
+                                        <p><label for="id_image">Image:</label>
+                                            <input type="file" name="image" id="id_image">
+                                        </p>
+                                        <p>
+                                            <label for="id_visibility">Visibility:</label>
+                                            <select name="visibility" id="id_visibility">
+                                                
+                                                <option value="Public" selected="">Công khai</option>
+                                                <option value="Friend">Bạn bè</option>
+                                                
+
+                                            </select>
+                                        </p>
+                                        <input type="hidden" name="post_edit_id" value="181">
+                                        <button type="submit" class="btnSua">Update</button>
+                                    </form>
+                                </div>
+                                <span class="close close_181"><i class="fa fa-close"></i></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    
+                    <div class="feed myfeed">
+
+
+                        
+                            <!-- Feed Top -->
+                            <div class="feed-top">
+                                <div class="user">
+                                    <div class="profile-picture">
+                                        <img src="/media/avatars/IMG_2849_gyDHbo2.JPG" alt="/media/avatars/IMG_2849_gyDHbo2.JPG">
+                                    </div>
+                                    <div class="info">
+                                        <h3>Nguyễn An</h3>
+                                        <div class="time text-gry">
+
+                                            <small>Hồ Chí Minh,
+                                                <span>12 giây trước</span>
+                                                
+                                                <img src="/static/images/public_post.png"
+                                                    alt="/static/images/public_post.png"
+                                                    style="width: 15px; display: inline-block;">
+                                                
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="edit">
+                                    <img src="/static/images/svg/three-dots.svg"
+                                        alt="/static/images/svg/three-dots.svg">
+                                    <ul class="edit-menu">
+                                        <li id="icon_edit181"><i class="fa fa-pen"></i>Edit</li>
+                                        <li id="icon_delete181"><i class="fa fa-trash"></i>Delete</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <script>
+                                document.querySelector('#icon_delete181').addEventListener('click', () => {
+                                    document.querySelector('.delete_post181').style.display = 'flex'
+                                });
+                                document.querySelector('#icon_edit181').addEventListener('click', () => {
+                                    document.querySelector('.edit_post181').style.display = 'flex'
+
+                                });
+                                document.querySelectorAll('.close_181').forEach(AllCloser => {
+                                    AllCloser.addEventListener('click', () => {
+
+
+                                        document.querySelector('.delete_post181').style.display = 'none'
+                                        document.querySelector('.edit_post181').style.display = 'none'
+
+                                    })
+                                });
+                            </script>
+                            <!-- Nội dung -->
+                            <p>ád</p>
+
+
+                            <!-- Feed Img 
+                        Kiểm tra hình ảnh có tồn tại-->
+                            
+
+
+                            <!-- Feed Action Aria -->
+                            <div class="action-button">
+                                <div class="interaction-button">
+
+                                    <!-- nút like: Tâm An-->
+                                    <form action="/liked/" method="POST" class="like-form"
+                                        id="181">
+                                        <input type="hidden" name="csrfmiddlewaretoken" value="AxHj2ejUymszfmzDVsnwcH8PAnFFnhe9yIBPi96S4IztIqfpYeViXtBmSayycL3Y">
+                                        <input type="hidden" name="post_id" value="181">
+                                        <!-- Nếu người dùng chưa có trong danh sách like bài viết -->
+                                        <button type="submit" class="like-btn181">
+                                            <span>
+                                                
+                                                <i class="fa fa-heart"></i>
+                                                
+                                            </span>
+                                        </button>
+
+
+                                    </form>
+                                    <!-- nút cmt: Tâm An-->
+                                    <!-- Tạo cmt -->
+                                    <form action="" method="post">
+                                        <input type="hidden" name="csrfmiddlewaretoken" value="AxHj2ejUymszfmzDVsnwcH8PAnFFnhe9yIBPi96S4IztIqfpYeViXtBmSayycL3Y">
+                                        <p><label for="id_body">Bình luận:</label> <input type="text" name="body" placeholder="Bình luận bài viết" required id="id_body"></p>
+                                        <input type="hidden" name="post_id" value="181">
+                                        <button type="submit" name="submit_c_form"
+                                            class="btn btn-primary">Comment</button>
+                                    </form>
+                                    <!-- Like + cmt: Thành -->
+                                    <!-- <span><i class="fa fa-heart"></i></span> -->
+                                    <!-- <span><i class="fa fa-comment-dots"></i></span> -->
+                                </div>
+                            </div>
+                            <!-- Thành -->
+                            <!-- <textarea placeholder="Bình luận..." class="command" rows="1"></textarea> -->
+                            <!-- Like By: Tâm An -->
+                            <div class="liked-by">
+                                <!-- Chưa thằng nào like -->
+                                
+
+                                <!-- 1 thằng like -->
+                                
+
+                            </div>
+                            <!-- Caption: Thành -->
+                            <!-- THÀNH: sửa css bo tròn bg, br, màu nền -->
+                            
+
+                            <!-- Comments: Thành -->
+                            <!-- <div class="comments text-gry">
+                            View all comments
+                        </div> -->
+
+                        </div>
+
+                        
+                    <div class="page">
+                        <!-- Modal delete post -->
+                        <div class="popup delete_post180">
+                            <div>
+                                <div class="popup-box delete_post-popup-box">
+                                    <h1>Bạn có muốn xóa bài viết không?</h1>
+                                    <!-----------------Font Size----------------->
+
+                                    <!----------------Primary Colors---------------->
+
+                                    <!----------------Background Colors---------------->
+                                    <form action="" method="post">
+                                        <input type="hidden" name="csrfmiddlewaretoken" value="AxHj2ejUymszfmzDVsnwcH8PAnFFnhe9yIBPi96S4IztIqfpYeViXtBmSayycL3Y">
+                                        <input type="hidden" name="post_del_id" value="180">
+                                        <button type="submit" class="btnXoa">Delete</button>
+                                    </form>
+                                </div>
+                                <span class="close close_180"><i class="fa fa-close"></i></span>
+                            </div>
+                        </div>
+                        <!-- Model edit post -->
+                        <div class="popup edit_post180">
+                            <div>
+                                <div class="popup-box edit_post-popup-box">
+                                    <h1>Edit post</h1>
+
+                                    <form action="" enctype="multipart/form-data" method="post">
+                                        <input type="hidden" name="csrfmiddlewaretoken" value="AxHj2ejUymszfmzDVsnwcH8PAnFFnhe9yIBPi96S4IztIqfpYeViXtBmSayycL3Y">
+                                        <p><label for="id_content">Content:</label> <textarea name="content" cols="40"
+                                                rows="10" required="" id="id_content">abc</textarea></p>
+                                        <p><label for="id_image">Image:</label>
+                                            <input type="file" name="image" id="id_image">
+                                        </p>
+                                        <p>
+                                            <label for="id_visibility">Visibility:</label>
+                                            <select name="visibility" id="id_visibility">
+                                                
+                                                <option value="Public" selected="">Công khai</option>
+                                                <option value="Friend">Bạn bè</option>
+                                                
+
+                                            </select>
+                                        </p>
+                                        <input type="hidden" name="post_edit_id" value="180">
+                                        <button type="submit" class="btnSua">Update</button>
+                                    </form>
+                                </div>
+                                <span class="close close_180"><i class="fa fa-close"></i></span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    
+                    <div class="feed myfeed">
+
+
+                        
+                            <!-- Feed Top -->
+                            <div class="feed-top">
+                                <div class="user">
+                                    <div class="profile-picture">
+                                        <img src="/media/avatars/IMG_2849_gyDHbo2.JPG" alt="/media/avatars/IMG_2849_gyDHbo2.JPG">
+                                    </div>
+                                    <div class="info">
+                                        <h3>Nguyễn An</h3>
+                                        <div class="time text-gry">
+
+                                            <small>Hồ Chí Minh,
+                                                <span>15 giây trước</span>
+                                                
+                                                <img src="/static/images/public_post.png"
+                                                    alt="/static/images/public_post.png"
+                                                    style="width: 15px; display: inline-block;">
+                                                
+                                            </small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="edit">
+                                    <img src="/static/images/svg/three-dots.svg"
+                                        alt="/static/images/svg/three-dots.svg">
+                                    <ul class="edit-menu">
+                                        <li id="icon_edit180"><i class="fa fa-pen"></i>Edit</li>
+                                        <li id="icon_delete180"><i class="fa fa-trash"></i>Delete</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <script>
+                                document.querySelector('#icon_delete180').addEventListener('click', () => {
+                                    document.querySelector('.delete_post180').style.display = 'flex'
+                                });
+                                document.querySelector('#icon_edit180').addEventListener('click', () => {
+                                    document.querySelector('.edit_post180').style.display = 'flex'
+
+                                });
+                                document.querySelectorAll('.close_180').forEach(AllCloser => {
+                                    AllCloser.addEventListener('click', () => {
+
+
+                                        document.querySelector('.delete_post180').style.display = 'none'
+                                        document.querySelector('.edit_post180').style.display = 'none'
+
+                                    })
+                                });
+                            </script>
+                            <!-- Nội dung -->
+                            <p>abc</p>
+
+
+                            <!-- Feed Img 
+                        Kiểm tra hình ảnh có tồn tại-->
+                            
+
+
+                            <!-- Feed Action Aria -->
+                            <div class="action-button">
+                                <div class="interaction-button">
+
+                                    <!-- nút like: Tâm An-->
+                                    <form action="/liked/" method="POST" class="like-form"
+                                        id="180">
+                                        <input type="hidden" name="csrfmiddlewaretoken" value="AxHj2ejUymszfmzDVsnwcH8PAnFFnhe9yIBPi96S4IztIqfpYeViXtBmSayycL3Y">
+                                        <input type="hidden" name="post_id" value="180">
+                                        <!-- Nếu người dùng chưa có trong danh sách like bài viết -->
+                                        <button type="submit" class="like-btn180">
+                                            <span>
+                                                
+                                                <i class="fa fa-heart"></i>
+                                                
+                                            </span>
+                                        </button>
+
+
+                                    </form>
+                                    <!-- nút cmt: Tâm An-->
+                                    <!-- Tạo cmt -->
+                                    <form action="" method="post">
+                                        <input type="hidden" name="csrfmiddlewaretoken" value="AxHj2ejUymszfmzDVsnwcH8PAnFFnhe9yIBPi96S4IztIqfpYeViXtBmSayycL3Y">
+                                        <p><label for="id_body">Bình luận:</label> <input type="text" name="body" placeholder="Bình luận bài viết" required id="id_body"></p>
+                                        <input type="hidden" name="post_id" value="180">
+                                        <button type="submit" name="submit_c_form"
+                                            class="btn btn-primary">Comment</button>
+                                    </form>
+                                    <!-- Like + cmt: Thành -->
+                                    <!-- <span><i class="fa fa-heart"></i></span> -->
+                                    <!-- <span><i class="fa fa-comment-dots"></i></span> -->
+                                </div>
+                            </div>
+                            <!-- Thành -->
+                            <!-- <textarea placeholder="Bình luận..." class="command" rows="1"></textarea> -->
+                            <!-- Like By: Tâm An -->
+                            <div class="liked-by">
+                                <!-- Chưa thằng nào like -->
+                                
+
+                                <!-- 1 thằng like -->
+                                
+
+                            </div>
+                            <!-- Caption: Thành -->
+                            <!-- THÀNH: sửa css bo tròn bg, br, màu nền -->
+                            
+
+                            <!-- Comments: Thành -->
+                            <!-- <div class="comments text-gry">
+                            View all comments
+                        </div> -->
+
+                        </div>
+
+                        
+
+
+                    </div>
+                    <!--=================Post Input End=================-->
+                </div>
+            </div>
+            <!--=================Main Middle End=================-->
+
+
+            <!--=================Main Right Start=================-->
+
+            <!--=================Main Right End=================-->
+
+        </div>
+        <div class="main-right">
+            <!------------Start Message------------>
+
+            <div class="messages">
+                <!------------------Message Top-------------------->
+                <div class="message-top">
+                    <h4>Message</h4> <i class="fa fa-edit"></i>
+                </div>
+                <!-- Search Bar -->
+                <div class="message-search-bar">
+                    <i class="fa fa-search"></i>
+                    <input type="search" placeholder="Search message..." id="message-search">
+                </div>
+                <!------------------Message Categories-------------------->
+                <div class="message-categories">
+                    <h6 class="active">Primary</h6>
+                    <h6>General</h6>
+                    <h6 class="message-request">Request(2)</h6>
+                </div>
+                <!------------Messag------------>
+                <div class="message">
+                    <div class="profile-picture">
+                        <img src="images/user1.jpeg" alt="">
+                        <div class="green-active"></div>
+                    </div>
+                    <div class="message-body">
+                        <h5>Alexa Lisa</h5>
+                        <p class="text-gry">
+                            Lorem ipsum dolor sit amet.
+                        </p>
+                    </div>
+                </div>
+                <div class="message">
+                    <div class="profile-picture">
+                        <img src="images/user1.jpeg" alt="">
+                        <div class="green-active"></div>
+                    </div>
+                    <div class="message-body">
+                        <h5>Alexa Lisa</h5>
+                        <p class="text-gry">
+                            Lorem ipsum dolor sit amet.
+                        </p>
+                    </div>
+                </div>
+                <div class="message">
+                    <div class="profile-picture">
+                        <img src="images/user1.jpeg" alt="">
+                        <div class="green-active"></div>
+                    </div>
+                    <div class="message-body">
+                        <h5>Alexa Lisa</h5>
+                        <p class="text-gry">
+                            Lorem ipsum dolor sit amet.
+                        </p>
+                    </div>
+                </div>
+                <div class="message">
+                    <div class="profile-picture">
+                        <img src="images/user1.jpeg" alt="">
+                        <div class="green-active"></div>
+                    </div>
+                    <div class="message-body">
+                        <h5>Alexa Lisa</h5>
+                        <p class="text-gry">
+                            Lorem ipsum dolor sit amet.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <!------------End Message------------>
+            <!------------Start Firend Request------------>
+            <div class="firend-rquest">
+
+                <h4>Request</h4>
+                
+            </div>
+            <!------------End Firend Request------------>
+        </div>
+    
+</main>

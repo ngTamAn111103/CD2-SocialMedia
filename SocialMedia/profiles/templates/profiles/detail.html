@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <style>
+        /* Main styling for the profile page */
+        .profile-page {
+            font-family: Arial, sans-serif;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .cover-image img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .profile-info {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .avatar img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            border: 3px solid #ddd;
+            margin-top: -100px;
+            background: #fff;
+        }
+
+        h1,
+        h2 {
+            margin: 10px 0;
+        }
+
+        .bio {
+            margin: 10px 0;
+            font-style: italic;
+        }
+
+        .location,
+        .gender,
+        .birthday {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .friends-list h3 {
+            margin-top: 20px;
+            color: #333;
+        }
+
+        .friends-list ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .friends-list li {
+            margin: 5px 0;
+        }
+
+        /* Add more styles as needed */
+        /* post list */
+        .posts-list ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .posts-list li.post {
+            background-color: #f9f9f9;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .post-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .post-stats {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        .post-visibility {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .post-comments {
+            margin-top: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .post-comments p {
+            margin: 5px 0;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="profile-page">
+        <div class="cover-image">
+            <img src="{{ object.cover.url }}" alt="Ảnh bìa">
+        </div>
+
+        <div class="profile-info">
+            <div class="avatar">
+                <img src="{{ object.avatar.url }}" alt="Ảnh đại diện">
+            </div>
+            <h1>{{ object.first_name }} {{ object.last_name }}</h1>
+            <h2>{{ object.username }}</h2>
+            <p class="bio">{{ object.bio }}</p>
+            <p class="id">{{ object.id }}</p>
+            <p class="location">Đến từ: {{ object.get_country_display }}</p>
+            <p class="gender">Giới tính: {{ object.get_gender_display }}</p>
+            <p class="birthday">Ngày sinh: {{ object.birthday|date:"d-m-Y" }}</p>
+            <!-- Nếu object.username ko nằm trong danh sách người gửi lời mới 
+                Nếu object.username ko nằm trong danh sách người nhân lời mới -->
+
+            {%if object.username not in rel_receiver and object.username not in rel_sender%}
+
+            <form action="{%url 'profiles:send_invite'%}" method="post">
+                {%csrf_token%}
+                <input type="hidden" name="profile_pk" value="{{object.pk}}">
+                <button class="btn btn-success" type="submit">Add to friends</button>
+            </form>
+            {%endif%}
+            <!-- Nếu object.username (đang xem ở detail) đang nằm trong danh sách người nhận lời mời kết bạn
+và 
+thằng đang đăng nhập ko nằm trong danh sách bạn nè -->
+            {% if object.username in rel_receiver and request.user not in object.friends.all %}
+            <button type="submit" class="btn btn-info">Waiting for approval</button>
+            {%endif%}
+
+            {%if request.user in object.friends.all %}
+            <form action="{%url 'profiles:remove_friend'%}" method="post">
+                {%csrf_token%}
+                <input type="hidden" name="profile_pk" value="{{object.pk}}">
+                <button class="btn btn-danger" type="submit">Remove from friends</button>
+            </form>
+            {%endif%}
+            {# Mục danh sách bạn bè - thay đổi tùy theo cách bạn muốn hiển thị #}
+            <div class="friends-list">
+                <h3>Bạn bè:</h3>
+                <ul>
+                    {% for friend in object.friends.all %}
+                    <a href="/profiles/{{friend.profile.slug}}">
+                        <li>{{ friend.username }}</li>
+                    </a>
+                    {% endfor %}
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="posts-list">
+        <h3>Bài viết gần đây</h3>
+        {% if len_posts %}
+        <ul>
+            {% for post in posts %}
+            <li class="post">
+                <div class="post-content">
+                    <p>{{ post.content }}</p>
+                    {% if post.image %}
+                    <img src="{{ post.image.url }}" alt="Hình ảnh trong bài viết">
+                    {% endif %}
+                </div>
+                <div class="post-stats">
+                    <span class="likes">{{ post.liked }} Thích</span>
+                    <span class="comments">{{ post.commented }} Bình luận</span>
+                </div>
+                <div class="post-visibility">
+                    <span>{{ post.get_visibility_display }}</span>
+                </div>
+                <div class="post-comments">
+                    <!-- Ví dụ về cách hiển thị bình luận (tùy chỉnh theo cấu trúc dữ liệu thực tế của bạn) -->
+                    {% for comment in post.comments.all %}
+                    <p>{{ comment.user }}: {{ comment.content }}</p>
+                    {% endfor %}
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <p>Chưa có bài viết nào.</p>
+        {% endif %}
+    </div>
+
+
+
+</body>
+
+</html>
