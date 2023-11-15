@@ -177,3 +177,73 @@ h5 {
     font-weight: bold;
 }
 
+/* ---------------------------- SỬA FORM ---------------------------------------- */
+.form-edit-post label[for="id_content"],
+            .form-edit-post label[for='id_visibility'] {
+                font-weight: bold;
+                font-size: 1rem;
+            }
+
+            .form-edit-post label[for='id_visibility'] {
+                font-weight: bold;
+                font-size: 1rem;
+                margin-right: 60px;
+            }
+
+            .form-edit-post label[for='id_image'] {
+                font-weight: bold;
+                font-size: 1rem;
+                margin-right: 80px;
+            }
+
+            #id_image {
+                margin-top: 20px;
+                margin-bottom: 20px;
+                width: 80%;
+            }
+
+            .form-edit-post #id_content {
+                margin-left: 75px;
+                margin-top: 30px;
+                max-height: 3rem;
+                max-width: 650px;
+                min-width: 649px;
+                font-weight: bold;
+                border-radius: var(--boder-radius);
+                padding: 15px 10px 0px 25px;
+                background: #e8e4f1;
+                display: table-cell;
+            }
+
+            #id_visibility {
+                margin-bottom: 45px;
+                width: 80%;
+                border: 1px solid rgb(196, 196, 196);
+                padding: 10px;
+                font-weight: bold;
+                background: #f6f1f1;
+                border-radius: var(--card-boder-radius);
+            }
+
+            .h1-editpost {
+                font-weight: bold;
+                font-size: 3rem;
+            }
+
+            .form-comment {
+                max-width: 650px;
+                min-width: 649px;
+            }
+
+            .form-comment .input-comment {
+                width: 82%;
+                float: left;
+            }
+
+            .btn-send-main {
+                width: 15%;
+                padding: var(--card-padding);
+                margin-left: 19px;
+                height: 50px;
+                margin-top: 10px;
+            }

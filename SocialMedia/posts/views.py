@@ -13,7 +13,7 @@ from profiles.models import Relationship
 from django.views.generic import UpdateView,DeleteView
 from django.db.models import Q
 from .models import Comment
-
+from notification.models import Notification
 # Create your views here.
 @login_required()
 def post_comment_create_listview(request):
@@ -66,6 +66,7 @@ def post_comment_create_listview(request):
 
     # Lấy danh sách lời mời kết bạn gửi đến mình
     friend_requests = Relationship.objects.filter((~Q(sender=profile)| ~Q(receiver= profile)), status='send')
+    
     
     # Accept request friends
     print("--------------------------------")
@@ -133,8 +134,9 @@ def post_comment_create_listview(request):
         else:
             # pass
             print("không có cái nào vào cả")
-            
-        
+    
+    # Trả về để test
+    notis = Notification.objects.all()
         
     # Mảng trả về
     context = {
@@ -144,6 +146,8 @@ def post_comment_create_listview(request):
         'c_form': c_form,
         'edit_p_form': edit_p_form,
         'friend_requests': friend_requests,
+        'my_notifications': notis,
+        'len_my_notifications': True if len(notis) > 0 else False
 
 
     }
@@ -203,6 +207,7 @@ def accept_delete_request(request):
         relationship.save()
     elif request.POST.get('btn_relationship') =='Delete':
         relationship.delete()
+
 
 
 

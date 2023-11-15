@@ -70,10 +70,7 @@
                     <span><img src="{%static 'images/svg/key-solid.svg'%}" alt=""></span>
                     <h3>Change Password</h3>
                 </a>
-                <a style="color: #211b32;" class="menu-item" href="{%url 'logout'%}">
-                    <span><img src="{%static 'images/svg/right-from-bracket-solid.svg'%}" alt=""></span>
-                    <h3>Log out</h3>
-                </a>
+                
 
                 <a class="menu-item" id="Notify-box">
                     <span><img src="{%static 'images/svg/bell.svg'%}" alt=""></span>
@@ -141,6 +138,10 @@
                     <span><img src="{%static 'images/svg/palette.svg'%}" alt=""></span>
                     <h3>Theme</h3>
                 </a>
+                <a style="color: #211b32;" class="menu-item" href="{%url 'logout'%}">
+                    <span><img src="{%static 'images/svg/right-from-bracket-solid.svg'%}" alt=""></span>
+                    <h3>Log out</h3>
+                </a>
 
                 <!------------------Add Post Btn------------------>
 
@@ -186,7 +187,7 @@
                                     <input type="hidden" name="post_edit_id" value="{{post.id}}">
                                     <button type="submit">Update</button>
                                 </form> -->
-                                    <form action="" enctype="multipart/form-data" method="post">
+                                    <form action="" enctype="multipart/form-data" method="post" class="form-edit-post">
                                         {%csrf_token%}
                                         <p><label for="id_content">Content:</label> <textarea name="content" cols="40"
                                                 rows="10" required="" id="id_content">{{post.content}}</textarea></p>
@@ -317,11 +318,12 @@
                                 </form>
                                 <!-- nút cmt: Tâm An-->
                                 <!-- THÀNH: SỬA Bình luận -->
-                                <form action="" method="post">
+                                <form action="" method="post" class="form-comment">
                                     {%csrf_token%}
                                     {{c_form.as_p}}
                                     <input type="hidden" name="post_id" value="{{post.id}}">
-                                    <button type="submit" name="submit_c_form" class="btn btn-primary">Comment</button>
+                                    <button type="submit" name="submit_c_form" class="btn btn-primary btn-send-main"><i
+                                            class="fa-regular fa-paper-plane"></i></button>
                                 </form>
 
                                 <!-- Like + cmt: Thành -->
@@ -365,7 +367,7 @@
                             <!-- <div class="title">Lorem ipsum dolor sit, amet consectetur adipisicing elit.
                                 Qui recusandae impedit aliquam non, velit alias maxime tenetur fuga et numquam.</div> -->
                             <p>
-                                <b>{{cmt.user.first_name}} {{cmt.user.last_name}}</b>
+                                <b>{{cmt.user.first_name}} {{cmt.user.last_name}}</b><span>2 phút trước</span>
                                 <br>
                                 {{cmt.body}}
                             </p>

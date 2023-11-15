@@ -38,55 +38,41 @@ Trang chủ
 
                 <a class="menu-item" id="Notify-box">
                     <span><img src="{%static 'images/svg/bell.svg'%}" alt=""></span>
-                    <small class="notfy-counter" id="ntCounter1">5+</small>
+                    <!-- Có cái chưa đọc -->
+                    {% if my_notifications.first.count_unread_notifications > 0 %}
+                    
+                    <small class="notfy-counter" id="ntCounter1" >{{my_notifications.first.count_unread_notifications}}</small>
+                    <!-- <h1>!=0</h1> -->
+                    <!-- đã đọc hết -->
+                    {%else%}
+                    <small class="notfy-counter" id="ntCounter1" style="display: none;">{{my_notifications.first.count_unread_notifications}}</small>
+<!-- <h1>==0</h1> -->
+                    {%endif%}
                     <h3>Notification</h3>
                     <!------------------Notification Box Start------------------>
                     <div class="notification-box">
+                        {%if len_my_notifications%}
+                        {%for noti in my_notifications%}
                         <div>
                             <div class="profile-picture">
-                                <img src="images/user.jpg" alt="">
+                                <img src="ảnh chờ test" alt="img">
                             </div>
                             <div class="notifition-body">
-                                <b>Maria</b> accepted your friend request
-                                <small class="text-gry">1 DAYS AGO</small>
+                                <b>Tam An</b> {{noti.notification_type}} bài viết của bạn
+                                <small class="text-gry">{{noti.get_time_elapsed}}</small>
                             </div>
                         </div>
-                        <div>
-                            <div class="profile-picture">
-                                <img src="images/user.jpg" alt="">
-                            </div>
-                            <div class="notifition-body">
-                                <b>Jhon Evan</b> commented on your post
-                                <small class="text-gry">2 HOUR AGO</small>
-                            </div>
+                        {%endfor%}
+                        {%else%}
+                        <div class="no-notification">
+                            <b>No notification</b>
                         </div>
-                        <div>
-                            <div class="profile-picture">
-                                <img src="images/user.jpg" alt="">
-                            </div>
-                            <div class="notifition-body">
-                                <b>Emaliy Benjamin</b> like your on post
-                                <small class="text-gry">JUST NOW</small>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="profile-picture">
-                                <img src="images/user.jpg" alt="">
-                            </div>
-                            <div class="notifition-body">
-                                <b>Mark Trump</b> and <b>10 other</b> like on your post
-                                <small class="text-gry">TODAYS</small>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="profile-picture">
-                                <img src="images/user.jpg" alt="">
-                            </div>
-                            <div class="notifition-body">
-                                <b>Evrahim Alli</b> and <b>5 other</b> commented on your post
-                                <small class="text-gry">3 DAYS AGO</small>
-                            </div>
-                        </div>
+                        {%endif%}
+                       
+                        
+                        
+                        
+                        
                     </div>
                     <!------------------Notification Box End------------------>
                 </a>
@@ -311,12 +297,12 @@ Trang chủ
                                     </form>
                                     <!-- nút cmt: Tâm An-->
                                     <!-- Tạo cmt -->
-                                    <form action="" method="post">
+                                    <form action="" method="post" class="form-comment">
                                         {% csrf_token %}
                                         {{ c_form.as_p }}
                                         <input type="hidden" name="post_id" value="{{ post.id }}">
                                         <button type="submit" name="submit_c_form"
-                                            class="btn btn-primary">Comment</button>
+                                            class="btn btn-primary btn-send-main"><i class="fa-regular fa-paper-plane"></i></button>
                                     </form>
                                     <!-- Like + cmt: Thành -->
                                     <!-- <span><i class="fa fa-heart"></i></span> -->
@@ -362,7 +348,7 @@ Trang chủ
                                 <!-- <div class="title">Lorem ipsum dolor sit, amet consectetur adipisicing elit.
                                 Qui recusandae impedit aliquam non, velit alias maxime tenetur fuga et numquam.</div> -->
                                 <p>
-                                    <b>{{cmt.user.first_name}} {{cmt.user.last_name}}</b>
+                                    <b>{{cmt.user.first_name}} {{cmt.user.last_name}}</b><span>2 phút trước</span>
                                     <br>
                                     {{cmt.body}}
                                 </p>
@@ -412,7 +398,7 @@ Trang chủ
                                         });
                                     </script>
 
-                                    
+
                                 </div>
                             </div>
                             <!-- Sau khi nhấn edit > hiển thị đoạn này lên -->
@@ -550,8 +536,12 @@ Trang chủ
                 <!------------Start Firend Request------------>
                 <div class="firend-rquest">
 
-                    <a href="{%url 'profiles:my_invites_view'%}"><h4>Request</h4></a>
-                    
+                    <a href="{%url 'profiles:my_invites_view'%}">
+                        <Button class="btn-primary btn-request">
+                            <a href="{%url 'profiles:my_invites_view'%}"><h4>Request</h4></a>
+                        </Button>
+                    </a>
+
                     {%for i in friend_requests|slice:":2"%}
                     {%if i.sender != profile%}
                     <div class="request">
@@ -585,13 +575,13 @@ Trang chủ
                                 </button> -->
 
 
-                                
-                                <div class="btn btn-primary">
-                                    <a href="/profiles/{{i.sender.slug}}">View Profile</a>
-                                    
-                                </div>
-                            
-                                <!-- <button value="Accept" name="btn_relationship" type="submit">
+
+                            <div class="btn btn-primary">
+                                <a href="{% url 'profiles:profile_detail_view' slug=i.sender.slug %}">View Profile</a>
+
+                            </div>
+
+                            <!-- <button value="Accept" name="btn_relationship" type="submit">
                                 <div class="btn btn-primary" id="Accept">
                                     <a href="/profiles/{{i.sender.slug}}">{{ friend.username }}</a>
                                     View Profile
@@ -626,9 +616,10 @@ Trang chủ
             <div id="my-profile-picture">
                 <img src="{{profile.avatar.url}}" alt="{{profile.avatar}}">
             </div>
-            <label for="profile-upload" class="btn btn-primary btn-lg"><a href="/profiles/myprofile">View
+            <label for="profile-upload" class="btn btn-primary btn-lg"><a
+                    href="{% url 'profiles:my_profile_view' %}">View
                     Profile</a></label>
-            <button class="btn btn-primary btn-lg"><a href="/logout">Log Out</a></button>
+            <button class="btn btn-primary btn-lg"><a href="{% url 'logout' %}">Log Out</a></button>
         </div>
         <span class="close"><i class="fa fa-close"></i></span>
     </div>
@@ -783,8 +774,8 @@ Trang chủ
 
             <form class="form-edit-post" action="" enctype="multipart/form-data" method="post">
                 {%csrf_token%}
-                <p><label for="id_content">Content:</label> <textarea name="content" cols="40"
-                        rows="10" required="" id="id_content">{{post.content}}</textarea></p>
+                <p><label for="id_content">Content:</label> <textarea name="content" cols="40" rows="10" required=""
+                        id="id_content">{{post.content}}</textarea></p>
                 <p><label for="id_image">Image:</label>
                     <input type="file" name="image" id="id_image">
                 </p>

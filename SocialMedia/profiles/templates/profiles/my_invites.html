@@ -34,7 +34,7 @@
                                     <h5 class="card-title">{{ user.username }}</h5>
                                     <p class="card-text">{{ user.bio }}</p>
                                     <div class="button-group">
-                                        <a href="/profiles/{{user.slug}}" class="btn btn-primary">
+                                        <a href="{% url 'profiles:profile_detail_view' slug=user.slug %}" class="btn btn-primary">
                                             <img src="{%static 'images/svg/profile.svg'%}" alt="{%static 'images/svg/profile.svg'%}" style="width: 15px;">
                                             See Profile
                                             

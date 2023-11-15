@@ -1,3 +1,4 @@
+{%load static%}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -138,7 +139,11 @@
 <body>
     <div class="profile-page">
         <div class="cover-image">
+            {% if object.cover %}
             <img src="{{ object.cover.url }}" alt="Ảnh bìa">
+            {% else %}
+            <img src="{%static 'images/cover_macdinh.jpg'%}" alt="Ảnh bìa">
+            {% endif %}
         </div>
 
         <div class="profile-info">
@@ -181,7 +186,9 @@ thằng đang đăng nhập ko nằm trong danh sách bạn nè -->
                 <div class="row">
                     {% for friend in object.friends.all %}
                     <div class="col-md-4">
-                            <a href="/profiles/{{friend.profile.slug}}/">
+                        <a href="{% url 'profiles:profile_detail_view' slug=friend.profile.slug %}"
+                            style="text-decoration: none; color: black;">
+
                             <div class="card">
                                 <img src="{{ friend.profile.avatar.url }}" class="card-img-top"
                                     alt="Ảnh đại diện của {{ friend.username }}">
@@ -190,15 +197,15 @@ thằng đang đăng nhập ko nằm trong danh sách bạn nè -->
                                 </div>
                             </div>
                         </a>
-                        </div>
+                    </div>
                     {% endfor %}
                 </div>
             </div>
             <a href="{% url 'profiles:friends' slug=object.slug %}" class="btn btn-info">
-                
+
                 See all friends
 
-        </a>
+            </a>
 
 
         </div>
