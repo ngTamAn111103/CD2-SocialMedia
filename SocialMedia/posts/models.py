@@ -8,9 +8,9 @@ from datetime import datetime
 import os
 
 # Create your models here.
+
 class Post (models.Model):
     content = models.TextField(blank=False,default='')
-    image = models.FileField(upload_to='post', blank=True, validators=[FileExtensionValidator( ['jpg','jpeg', 'mp4', 'mov','png'] )])
     liked = models.ManyToManyField(Profile, blank=True, related_name='likes')
     commented = models.ManyToManyField(Profile, blank=True, related_name='comments')
     updated = models.DateTimeField(auto_now=True)
@@ -26,6 +26,7 @@ class Post (models.Model):
     def __str__(self) -> str:
         return str(self.content[:50])
     
+    
     def num_likes(self):
         return self.liked.all().count()
         # return self.liked.filter().all().count()
@@ -40,6 +41,10 @@ class Post (models.Model):
         return self.liked.all()
     def num_comments (self):
         return self.comment_set.all().count()
+    
+    # Lấy số lượng ảnh của bài viết
+    def num_images_post(self):
+        return self.images.all().count()
     # lấy thời gian đăng bài
     def get_time_elapsed(post):
         current_time = datetime.now(timezone.utc)
@@ -101,3 +106,14 @@ class Like (models.Model):
     
     def __str__(self) -> str:
         return f"{self.user}-{self.post}-{self.value}"
+    
+
+class Image(models.Model):
+    post = models.ForeignKey(Post, related_name='images', on_delete=models.CASCADE)
+    image = models.FileField(upload_to='post', blank=True, 
+                             validators=[FileExtensionValidator(['jpg', 'jpeg', 'png', 'mp4', 'mov'])])
+    def __str__(self) -> str:
+        return f"{self.image}"
+    def get_image_extension(self):
+        if self.image:
+            return os.path.splitext(self.image.name)[1]

@@ -8,7 +8,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth import login, logout,get_user_model
 from django.views.generic import CreateView,UpdateView,DetailView, ListView
 from .models import Profile, Relationship,ProfileManager
-from posts.models import Post,Comment
+from posts.models import Post,Comment,Image
 from .form import ProfileModelForm, SignUpModelForm,LoginModelForm,ChangePasswordModelForm
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.decorators import login_required
@@ -16,6 +16,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
 from posts.forms import PostModelForm,CommentModelForm,EditPostModelForm, EditCmtModelForm
 from django.contrib.auth.models import User
+
 
 
 
@@ -71,10 +72,15 @@ def my_profile_view(request):
         
         # edit post
         elif edit_p_form.is_valid() & (post_edit_id is not None):
-            #print("elif edit_p_form.is_valid():")
-            instance = edit_p_form.save(commit=False)
-            instance.author = profile
-            instance.save()
+            print("elif edit_p_form.is_valid():")
+            post_edit = edit_p_form.save(commit=False)
+            post_edit.author = profile
+            post_edit.save()
+            post_edit.images.all().delete()
+            # Xử lý mỗi file tải lên riêng biệt
+            for file in request.FILES.getlist('image'):
+                Image.objects.create(post=post_edit, image=file)
+            return redirect('/')  # Chuyển hướng sau khi gửi thành công
 
             return redirect('/profiles/myprofile/')  # Chuyển hướng sau khi gửi thành công
         # edit cmt
@@ -131,6 +137,7 @@ class SignUp(CreateView):
         country = form.cleaned_data['country']
         gender = form.cleaned_data['gender']
         birthday = form.cleaned_data['birthday']
+        email = form.cleaned_data['email']
         
         # Lấy tài khoản
         username = form.cleaned_data['username']
@@ -153,7 +160,7 @@ class SignUp(CreateView):
                 user.set_password(password1)  # Đảm bảo mật khẩu được mã hóa
 
                 # Tạo đối tượng Profile và lưu vào cơ sở dữ liệu
-                profile = Profile(username=user, first_name=first_name, last_name=last_name, country=country, gender=gender, birthday=birthday)
+                profile = Profile(email=email,username=user, first_name=first_name, last_name=last_name, country=country, gender=gender, birthday=birthday)
                 
                 user.save()
                 profile.save()
@@ -280,6 +287,7 @@ class ProfileDetailView(DetailView):
     template_name = 'profiles/detail.html'
     def get_object(self, slug=None):
         slug = self.kwargs.get('slug')
+
         profile = Profile.objects.get(slug=slug)
         return profile
     def get_context_data(self, **kwargs):
@@ -408,6 +416,7 @@ class FriendsListView(ListView):
     template_name = 'profiles/detail_all_friends.html'
     def get_object(self, slug=None):
         slug = self.kwargs.get('slug')
+
         profile = Profile.objects.get(slug=slug)
         # trả về profile của thằng detail
         return profile
@@ -428,3 +437,5 @@ class FriendsListView(ListView):
         
         
         return context
+
+

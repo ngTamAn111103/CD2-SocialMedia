@@ -48,6 +48,7 @@ class Profile(models.Model):
     first_name = models.CharField(max_length=200, blank=True)
     last_name = models.CharField(max_length=200, blank=True)
     username = models.OneToOneField(User, on_delete=models.CASCADE)
+    email = models.EmailField(unique=True, blank=False, )
     bio = models.TextField(default="Chưa có tiểu sử...", max_length=100)
     CHOICE_COUNTRY = (
     ('Đà Nẵng', 'Đà Nẵng'),

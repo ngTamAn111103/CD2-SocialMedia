@@ -1,16 +1,19 @@
 from django import forms
-from .models import Post, Comment
+from .models import Post, Comment,Image
 from django.db import models
 # Tạo 1 bài viết mới
 class PostModelForm(forms.ModelForm):
+    image = forms.FileField(required=False, widget=forms.ClearableFileInput(attrs={'multiple': True}))
+
     class Meta:
         model = Post
-        fields = ('content', 'image','visibility')
+        fields = ('content','visibility',)
         widgets = {
             'content': forms.Textarea(attrs={'class': 'content-post','placeholder':'Bạn đang nghĩ gì?'}),
-            'image': forms.FileInput(attrs={'class': 'image-post'}),
             'visibility': forms.Select(attrs={'class': 'visibility'}),
         }
+    
+
 
         
         
@@ -22,10 +25,13 @@ class CommentModelForm(forms.ModelForm):
         model = Comment
         fields = ('body',)
 
+# Sửa bài viết
 class EditPostModelForm(forms.ModelForm):
+    
+
     class Meta:
         model = Post
-        fields = ('content','image', 'visibility',)
+        fields = ('content', 'visibility',)
 class EditCmtModelForm(forms.ModelForm):
     
     class Meta:

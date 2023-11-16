@@ -15,6 +15,7 @@ from .views import (my_profile_view,
 from django.contrib.auth import views as auth_views
 from . import views
 from django.contrib.auth.models import User
+from sendemail.views import send_OTP 
 
 
 app_name = 'profiles'
@@ -23,6 +24,7 @@ urlpatterns =[
     path('myprofile/', views.my_profile_view, name='my_profile_view'),
     # Trang cá nhân của người khác
     path('<slug>/', ProfileDetailView.as_view(), name='profile_detail_view'),
+
 
 
     # LÂM: Đổi mật khẩu

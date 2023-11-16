@@ -20,6 +20,7 @@ class SignUpModelForm(forms.ModelForm):
     first_name = forms.CharField(label='Họ')
     last_name = forms.CharField(label='Tên')
     username = forms.CharField(label='Tài khoản')
+    email = forms.CharField(label='Mail')
     password1 = forms.CharField(label='Mật khẩu', widget=forms.PasswordInput())
     password2 = forms.CharField(label='Nhập lại mật khẩu', widget=forms.PasswordInput())
     # Chọn thành phố 
@@ -108,7 +109,7 @@ class SignUpModelForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('first_name','last_name', 'username', 'password1', 'password2', 'country','gender','birthday')
+        fields = ('first_name','last_name', 'username','email', 'password1', 'password2', 'country','gender','birthday')
     
     # Cấu hình bắt lỗi
     def clean_username(self):
@@ -116,6 +117,12 @@ class SignUpModelForm(forms.ModelForm):
         username = self.cleaned_data.get('username')
         if User.objects.filter(username=username).exists():
             raise forms.ValidationError("Tài khoản đã tồn tại. Vui lòng chọn một tài khoản khác.")
+        return username
+    def clean_email(self):
+        # Kiểm tra xem tài khoản đã tồn tại chưa
+        username = self.cleaned_data.get('email')
+        if User.objects.filter(username=username).exists():
+            raise forms.ValidationError("Email đã tồn tại.")
         return username
     def clean_password2(self):
         cleaned_data = super().clean()

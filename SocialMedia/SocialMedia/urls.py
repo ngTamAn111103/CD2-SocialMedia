@@ -34,6 +34,7 @@ urlpatterns = [
     path('', include('posts.urls'), name='posts'),
     # Vào trong url profile: http://127.0.0.1:8000/profiles/myprofile/
     path('profiles/', include('profiles.urls'), name='profiles'),
+    path('forgot_password/', include('sendemail.urls'), name='forgot_password'),
     
     # đăng ký
     path('register', views.SignUp.as_view(), name='signup'),

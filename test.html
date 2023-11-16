@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.0/dist/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+</head>
+<body>
+  
+    
+  
+    <a href="https://source.unsplash.com/Lzx4J_Pb3sk/1500x1000" data-fancybox="group" data-caption="This image has a caption 1">
+      <img src="https://source.unsplash.com/Lzx4J_Pb3sk/240x160" />
+    </a>
+    
+    <a hidden href="https://source.unsplash.com/cZVthlrnlnQ/1500x1000" data-fancybox="group" data-caption="This image has a caption 2">
+      <img src="https://source.unsplash.com/cZVthlrnlnQ/240x160" />
+    </a>
+    
+    <a href="https://source.unsplash.com/vddccTqwal8/1500x1000" data-fancybox="group" data-caption="This image has a caption 3">
+      <img src="https://source.unsplash.com/vddccTqwal8/240x160" />
+    </a>
+    
+    <a href="https://source.unsplash.com/Sj5efgWguDs/1500x1000" data-fancybox="group" data-caption="This image has a caption 4">
+      <img src="https://source.unsplash.com/Sj5efgWguDs/240x160" />
+    </a>
+  </p>
+    
+  <script>$('[data-fancybox]').fancybox({
+    // Options will go here
+    buttons : [
+      'close'
+    ],
+    wheel : false,
+    transitionEffect: "slide",
+     // thumbs          : false,
+    // hash            : false,
+    loop            : true,
+    // keyboard        : true,
+    toolbar         : false,
+    // animationEffect : false,
+    // arrows          : true,
+    clickContent    : false
+  });</script>
+</body>
+</html>
+
+{%for image in post.images.all %}
+                            <!-- Nếu post có trường image -->
+                            {% if image.image %}
+                            <!-- Kiểm tra đuôi file  là video-->
+                            {% if image.get_image_extension == ".MP4" or post.get_image_extension == ".MOV"%}
+
+                            <video width="250px" controls>
+                                <source src="{{image.url}}" type="video/mp4">
+                                <source src="{{image.image.url}}" type="video/ogg">
+                                Your browser does not support HTML video.
+                            </video>
+                            <!-- Còn đây là đuôi ảh -->
+                            {%else%}
+                            <div class="feed-img">
+                                <img src="{{image.image.url}}" alt="{{image.image.url}}">
+                            </div>
+                            {%endif%}
+                            {%endif%}
+                            {% endfor %}

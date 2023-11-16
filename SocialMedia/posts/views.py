@@ -2,7 +2,7 @@ from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db import models
 from django.shortcuts import render,redirect,get_object_or_404
-from .models import Post,Like
+from .models import Post,Like, Image
 from .models import Profile
 from django.http import HttpResponse
 from django.urls import reverse_lazy
@@ -14,6 +14,7 @@ from django.views.generic import UpdateView,DeleteView
 from django.db.models import Q
 from .models import Comment
 from notification.models import Notification
+
 # Create your views here.
 @login_required()
 def post_comment_create_listview(request):
@@ -35,12 +36,12 @@ def post_comment_create_listview(request):
     # Lấy tất cả các bài viết của bạn bè và thêm vào danh sách
     for friend in friends:
         if friend.sender == profile:
-            posts += Post.objects.filter(author=friend.receiver)
+            posts += Post.objects.filter(author=friend.receiver).prefetch_related('images')
         else:
-            posts += Post.objects.filter(author=friend.sender)
+            posts += Post.objects.filter(author=friend.sender).prefetch_related('images')
 
     # Lấy tất cả các bài viết của bạn và thêm vào danh sách
-    your_posts = Post.objects.filter(author=profile)
+    your_posts = Post.objects.filter(author=profile).prefetch_related('images')
 
     # Gộp danh sách bài viết của bạn bè và của bạn
     posts += list(your_posts)
@@ -50,7 +51,7 @@ def post_comment_create_listview(request):
 
 
     # new post form
-    p_form = PostModelForm(request.POST or None, request.FILES or None)
+    p_form = PostModelForm(request.POST or None, request.FILES or None,request.FILES.getlist('image'))
     # new comment form
     c_form = CommentModelForm(request.POST or None)
 
@@ -95,10 +96,13 @@ def post_comment_create_listview(request):
         # edit post
         elif edit_p_form.is_valid() & (post_edit_id is not None):
             print("elif edit_p_form.is_valid():")
-            instance = edit_p_form.save(commit=False)
-            instance.author = profile
-            instance.save()
-
+            post_edit = edit_p_form.save(commit=False)
+            post_edit.author = profile
+            post_edit.save()
+            post_edit.images.all().delete()
+            # Xử lý mỗi file tải lên riêng biệt
+            for file in request.FILES.getlist('image'):
+                Image.objects.create(post=post_edit, image=file)
             return redirect('/')  # Chuyển hướng sau khi gửi thành công
         # edit cmt
         elif (edit_c_form.is_valid()) & (cmt_edit_id is not None):
@@ -111,12 +115,17 @@ def post_comment_create_listview(request):
             return redirect('/')  # Chuyển hướng sau khi gửi thành công
         # Tạo post
         elif p_form.is_valid():
-            print("elif p_form.is_valid():")
-            instance = p_form.save(commit=False)
-            instance.author = profile
-            instance.save()
-            p_form = PostModelForm()
-            return redirect('/')  # Chuyển hướng sau khi gửi thành công
+            print(" elif p_form.is_valid():")
+            post = p_form.save(commit=False)
+            post.author = profile
+            post.save()
+
+            # Xử lý mỗi file tải lên riêng biệt
+            for file in request.FILES.getlist('image'):
+                Image.objects.create(post=post, image=file)
+
+            return redirect('/')
+
         # Tạo cmt
         elif c_form.is_valid():
             print('elif c_form.is_valid():')
